@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="sq" ng-app="beamng.apps">
+<head>
+<meta charset="utf-8">
+<title>HUD PRO v5.1 — DEMO & DOWNLOAD</title>
+<style>
+  html,body{margin:0;height:100%;overflow:hidden;font-family:'Segoe UI',Arial,sans-serif;
+    background:radial-gradient(1200px 520px at 62% 18%, #33415a 0%, #14171c 58%, #0a0c0f 100%);}
+
+  /* ===== Banner i madh per shkarkim ===== */
+  #download-bar{
+    position:fixed;left:0;right:0;top:0;z-index:9999;
+    display:flex;gap:14px;align-items:center;flex-wrap:wrap;
+    padding:14px 18px;
+    background:linear-gradient(90deg,rgba(255,126,20,.96),rgba(255,138,30,.88));
+    box-shadow:0 6px 24px rgba(0,0,0,.45);
+    font:800 15px/1.35 'Segoe UI',Arial,sans-serif;color:#fff;
+  }
+  #download-bar a.dl-btn{
+    display:inline-block;padding:12px 22px;border-radius:12px;
+    background:#0b0d10;color:#ff9a2e;text-decoration:none;font-weight:900;font-size:16px;
+    letter-spacing:.04em;box-shadow:0 4px 14px rgba(0,0,0,.4);cursor:pointer;
+  }
+  #download-bar a.dl-btn:hover{background:#171a1f;color:#ffb35c;}
+  #download-bar .sub{font-weight:600;opacity:.95;max-width:720px;font-size:12.5px;}
+
+  /* demo HUD zhvendoset pak poshte qe banner-i mos ta mbuloje */
+  creatorpack-panel{display:block;position:absolute;top:52px;left:0;right:0;bottom:0;}
+
+  #demo-bar{position:fixed;left:0;right:0;bottom:0;z-index:999;display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+    padding:10px 14px;background:rgba(8,10,14,.94);border-top:1px solid rgba(255,255,255,.12);
+    font:600 12px/1.3 'Segoe UI',Arial,sans-serif;color:#fff;}
+  #demo-bar b{color:#ff8a1e;letter-spacing:.08em;}
+  #demo-bar button{padding:8px 12px;border:0;border-radius:9px;background:#ff7e14;color:#fff;font-weight:800;cursor:pointer;}
+  #demo-bar button.ghost{background:rgba(255,255,255,.14);}
+  #demo-bar .hint{opacity:.62;max-width:560px;}
+</style>
+<script src="angular.min.js"></script>
+<script>
+  // Stub i modulit qe app.js i vete te BeamNG — demo punon ne browser te thjeshte.
+  angular.module('beamng.apps', []);
+
+  // Simulim i telematikes se lojes (vetem per demo; ne loje kjo vjen automatikisht nga Lua).
+  var demoDamage = 0;
+  function demoHit(power) {
+    var root = angular.element(document.body).injector().get('$rootScope');
+    demoDamage = Math.min(1, demoDamage + power);
+    root.$apply(function () {
+      root.$broadcast('creatorpack.cost', {
+        ratio: demoDamage,
+        speedKmh: 40 + Math.round(power * 260),
+        maxValue: 30000,
+        mode: 'jbeam'
+      });
+    });
+  }
+  function demoReset() {
+    localStorage.removeItem('pfhud_config_v14_working_upload_clone');
+    location.reload();
+  }
+</script>
+<script src="/ui/modules/apps/CreatorPack/app.js"></script>
+</head>
+<body>
+
+<!-- ===== BUTONI I SHKARKIMIT ===== -->
+<div id="download-bar">
+  <a class="dl-btn" href="/CreatorPack_v5.1_FUTURA_ON_OFF.zip" download="CreatorPack_v5.1_FUTURA_ON_OFF.zip">⬇ SHKARKO ZIP (83 KB)</a>
+  <span class="sub">HUD PRO v5.1 — rrumullakat ON/OFF + Futura Extra Bold.<br>
+  E vendos në <b>Documents\BeamNG.drive\mods</b> (mos e ekstrakto!), fshi CreatorPack v5.0, restart BeamNG.</span>
+</div>
+
+<creatorpack-panel></creatorpack-panel>
+
+<div id="demo-bar">
+  <b>DEMO v5.1</b>
+  <button onclick="demoHit(0.07)">Goditje e lehtë</button>
+  <button onclick="demoHit(0.22)">Goditje e rëndë</button>
+  <button onclick="demoHit(0.55)">Aksident 💀</button>
+  <button class="ghost" onclick="demoReset()">Reset demo</button>
+  <span class="hint">Provo: KRYESORE → «Rrumullakat e makinave: ON/OFF» · SURVIVAL → «VETËM SURVIVAL CHANCE» · fonti tani Futura Extra Bold. Në lojë dëmi matet vetë.</span>
+</div>
+</body>
+</html>
