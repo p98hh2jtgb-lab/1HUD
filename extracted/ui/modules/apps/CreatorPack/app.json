@@ -1,0 +1,17 @@
+{
+  "name": "HUD PRO — Damage Ring",
+  "author": "daimy",
+  "version": "5.1.0",
+  "description": "HUD PRO v5.1 - ON/OFF toggle for the round vehicle circles (leave only Survival Chance on screen) and Survival Chance text now uses Futura Extra Bold (embedded, no install needed).",
+  "directive": "creatorpackPanel",
+  "domElement": "<creatorpack-panel></creatorpack-panel>",
+  "css": {
+    "left": "0px",
+    "top": "0px",
+    "width": "100%",
+    "height": "100%"
+  },
+  "category": "Gameplay",
+  "isAuxiliary": false,
+  "interactive": "required"
+}
