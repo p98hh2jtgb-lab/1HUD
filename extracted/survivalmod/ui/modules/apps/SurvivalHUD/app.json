@@ -1,7 +1,7 @@
 {
   "name": "SURVIVAL HUD",
   "author": "daimy",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "SURVIVAL HUD v1.1 — HUD në ekran identik me v5.1, panel opsionesh i ri (graphite + i bardhë).",
   "directive": "survivalhudPanel",
   "domElement": "<survivalhud-panel></survivalhud-panel>",

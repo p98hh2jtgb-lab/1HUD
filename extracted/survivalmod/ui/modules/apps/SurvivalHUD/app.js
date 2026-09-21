@@ -10,7 +10,7 @@ angular.module('beamng.apps')
     restrict: 'EA',
     templateUrl: '/ui/modules/apps/SurvivalHUD/app.html',
     link: function(scope, element) {
-      var STORAGE_KEY = 'survivalhud_config_v2';
+      var STORAGE_KEY = 'survivalhud_config_v3';
 
       // =====================================================
       // DEFAULTS — të njëjta me HUD PRO v5.1 (post-migrim)
@@ -412,9 +412,16 @@ angular.module('beamng.apps')
 
       scope.survivalStyle = function() {
         var bg = hexToRgba(scope.cfg.survivalBackgroundColor || '#071016', Math.max(0, Math.min(0.95, Number(scope.cfg.survivalBackgroundOpacity) || 0)));
+        // Rrjetë sigurie: pozicionimi kritik edhe inline — funksionon edhe nëse CSS-i nuk ngarkohet në CEF.
         return {
+          position: 'absolute',
           left: Math.max(0, Math.min(100, Number(scope.cfg.survivalPosX) || 0)) + '%',
           top: Math.max(0, Math.min(100, Number(scope.cfg.survivalPosY) || 0)) + '%',
+          transform: 'translate(-50%,-50%)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          whiteSpace: 'nowrap',
           fontSize: Math.max(28, Math.min(110, Number(scope.cfg.survivalSize) || 54)) + 'px',
           fontStyle: scope.cfg.survivalItalic === false ? 'normal' : 'italic',
           fontWeight: scope.cfg.survivalFontWeight || '900',
@@ -493,6 +500,7 @@ angular.module('beamng.apps')
 
       scope.panelStyle = function() {
         return {
+          position: 'absolute',
           left: Math.max(0, Number(scope.cfg.panelX || 18)) + 'px',
           top: Math.max(0, Number(scope.cfg.panelY || 90)) + 'px'
         };

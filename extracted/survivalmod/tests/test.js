@@ -86,7 +86,7 @@ function makeScope() {
   directiveDef.link(scope, element);
   return scope;
 }
-function fresh() { delete storage['survivalhud_config_v2']; return makeScope(); }
+function fresh() { delete storage['survivalhud_config_v3']; return makeScope(); }
 
 var passed = 0, failed = 0;
 function ok(cond, msg) {
@@ -112,7 +112,7 @@ ok(s.cfg.survivalFormula === 'balanced', 'formula=balanced');
 var bad = { survivalLayout: 'x', survivalBackground: 'y', survivalDisplayMode: 'z', survivalFormula: 'w',
             survivalStatusPosition: 'mid', survivalEmojiMode: 'up', survivalDeltaPosition: 'left',
             survivalPosX: null, survivalSize: NaN, survivalFontWeight: '123', survivalLabelText: '' };
-storage['survivalhud_config_v2'] = JSON.stringify(bad);
+storage['survivalhud_config_v3'] = JSON.stringify(bad);
 var s2 = makeScope();
 ok(s2.cfg.survivalLayout === 'inline', 'normalize: layout -> inline');
 ok(s2.cfg.survivalBackground === 'none', 'normalize: bg -> none');
@@ -178,7 +178,7 @@ s7.toggleHud();
 ok(s7.cfg.survivalOn === false && s7.survivalVisible() === false, 'toggleHud e fik');
 s7.toggleHud();
 ok(s7.cfg.survivalOn === true && s7.survivalVisible() === true, 'toggleHud e ndez');
-ok(JSON.parse(storage['survivalhud_config_v2']).survivalOn === true, 'persist shkruan');
+ok(JSON.parse(storage['survivalhud_config_v3']).survivalOn === true, 'persist shkruan');
 s7.testHit(0.4); flush();
 ok(s7.chance < 100, 'testHit e zbret');
 s7.resetRun();

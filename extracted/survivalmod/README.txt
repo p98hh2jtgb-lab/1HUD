@@ -1,4 +1,4 @@
-SURVIVAL HUD v1.1
+SURVIVAL HUD v1.2
 Mod i pavarur: VETEM Survival Chance. Pa rrethet e makinave, pa PASS/FAIL.
 
 HUD-I NE EKRAN: IDENTIK me HUD PRO v5.1 — te njejtat shkronja (Futura Extra Bold),
