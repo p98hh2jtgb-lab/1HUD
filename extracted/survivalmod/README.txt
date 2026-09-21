@@ -1,19 +1,13 @@
-SURVIVAL HUD v1.3
-Mod i pavarur: VETEM Survival Chance. Pa rrethet e makinave, pa PASS/FAIL.
+SURVIVAL HUD v1.4
+Mod i pavarur: VETEM Survival Chance (HUD-i ne ekran identik me HUD PRO v5.1).
 
-HUD-I NE EKRAN: IDENTIK me HUD PRO v5.1 (shkronja, emoji, animacione, ngjyra).
+v1.4 FIX I MADH: CSS-i i panelit te opsioneve mungonte krejt nga v1.0 (bug ne build).
+Tani paneli ka stilin HUD PRO: i erret me transparente, karta, tab-e portokalli,
+butona/slider-a/toggle-a/inpute custom, scrollbar. CSS dorëzohet ne 2 mënyra
+(<style> ne template + app.css) per siguri maksimale.
 
-v1.3 FIX: paneli dilte pa stil në disa instalime (CEF nuk aplikonte <style> brenda template-it).
-Tani CSS-i vjen si skedar i veçtë (app.css) i injektuar në <head>, dhe fontet janë skedarë
-reale (Jost-800.woff2 / Jost-800i.woff2) — te njëjta teknikë që përdorin modelet zyrtare.
-Paneli ka edhe stile inline fallback: edhe në rast ekstrem është kuti e errët e klikueshme.
+Verifikimi: hap panelin (H) — te titulli shkruan «OPSIONET · v1.4».
 
-SI TË DALLOSH SE PO PUNON v1.3: hap panelin (H) — te titulli shkruan «OPSIONET · v1.3».
-
-TASTET: V = ON/OFF · R = reset run · H = paneli (te ndryshueshme ne TJERA).
-Lidhjet e forta: Options -> Controls -> "SURVIVAL HUD: ..."
-
-INSTALIMI: fshi ZIP-in e vjetër, vendose këtë në Documents/BeamNG.drive/mods (mos e ekstrakto),
-RESTART BeamNG i plotë. Nëse paneli ende del pa stil: Launcher -> Clear Cache -> restart.
-
-TESTE: 90 teste funksionale (tests/test.js).
+TASTET: V = ON/OFF · R = reset run · H = paneli.
+INSTALIMI: fshi ZIP-in e vjeter, vendose kete, RESTART BeamNG i plote.
+Nese.paneli delve pa stil (duket v1.3): Launcher -> Clear Cache -> restart.

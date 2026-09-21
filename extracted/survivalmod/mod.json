@@ -1,6 +1,6 @@
 {
   "name": "SurvivalHUD",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "author": "daimy",
-  "description": "SURVIVAL HUD v1.3 — HUD në ekran identik me v5.1; CSS si skedar i veçtë (fix për panelin e pa-stiluar në lojë) + fontet si skedarë."
+  "description": "SURVIVAL HUD v1.4 — panel i opsioneve me stilin HUD PRO (fix: CSS i panelit mungonte krejt)."
 }

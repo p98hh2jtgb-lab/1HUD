@@ -6,12 +6,20 @@
 (function() {
   try {
     if (typeof document === 'undefined' || !document.head) return;
-    if (document.getElementById('survivalhud-css')) return;
-    var link = document.createElement('link');
-    link.id = 'survivalhud-css';
-    link.rel = 'stylesheet';
-    link.href = '/ui/modules/apps/SurvivalHUD/app.css';
-    document.head.appendChild(link);
+    if (!document.getElementById('survivalhud-css')) {
+      var link = document.createElement('link');
+      link.id = 'survivalhud-css';
+      link.rel = 'stylesheet';
+      link.href = '/ui/modules/apps/SurvivalHUD/app.css';
+      document.head.appendChild(link);
+    }
+    // Fontet Futura Extra Bold si skedarë realë (nëse CEF ka FontFace API)
+    if (typeof FontFace !== 'undefined' && document.fonts && document.fonts.add) {
+      var n = new FontFace('Futura Extra Bold', "url('/ui/modules/apps/SurvivalHUD/Jost-800.woff2')", { weight: '900', style: 'normal' });
+      var i = new FontFace('Futura Extra Bold', "url('/ui/modules/apps/SurvivalHUD/Jost-800i.woff2')", { weight: '900', style: 'italic' });
+      n.load().then(function(f) { document.fonts.add(f); }).catch(function() {});
+      i.load().then(function(f) { document.fonts.add(f); }).catch(function() {});
+    }
   } catch (e) {}
 })();
 
@@ -512,22 +520,9 @@ angular.module('beamng.apps')
       };
 
       scope.panelStyle = function() {
-        // Rrjetë sigurie: edhe pa CSS, paneli duhet të jetë kuti e errët e klikueshme.
         return {
-          position: 'absolute',
           left: Math.max(0, Number(scope.cfg.panelX || 18)) + 'px',
-          top: Math.max(0, Number(scope.cfg.panelY || 90)) + 'px',
-          width: '620px',
-          maxWidth: '96vw',
-          maxHeight: '86vh',
-          overflow: 'auto',
-          background: '#101216',
-          color: '#f2f4f6',
-          borderRadius: '14px',
-          border: '1px solid rgba(255,255,255,.09)',
-          boxShadow: '0 24px 70px rgba(0,0,0,.55)',
-          pointerEvents: 'auto',
-          zIndex: 10
+          top: Math.max(0, Number(scope.cfg.panelY || 90)) + 'px'
         };
       };
 

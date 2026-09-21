@@ -150,3 +150,61 @@ creatorpack-panel, survivalhud-panel, .sv-root { display:block; width:100%; heig
     .pf-survival.low-pulse:not(.impact-shake) { animation:pfLowPulse 1.15s ease-in-out infinite; }
     .pf-anim-off .pf-survival.pulse .pf-survival-value,
     .pf-anim-off .pf-survival-delta { animation:none!important; }
+
+    /* ==================================================
+       PANELI I OPSIONEVE — stil HUD PRO (v1.4)
+       ================================================== */
+    .sv-panel {
+      position:absolute; width:560px; max-height:78vh; overflow:auto;
+      background:rgba(8,10,14,0.92);
+      border:1px solid rgba(255,255,255,0.08); border-radius:18px;
+      box-shadow:0 18px 50px rgba(0,0,0,0.42);
+      pointer-events:auto; z-index:10;
+      font-family:'Futura Extra Bold','Segoe UI','Helvetica Neue',Arial,sans-serif;
+      color:#fff;
+    }
+    .sv-panel::-webkit-scrollbar { width:10px; }
+    .sv-panel::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.16); border-radius:10px; }
+    .sv-head { padding:16px 18px 10px; border-bottom:1px solid rgba(255,255,255,0.06); display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+    .sv-title { font-size:24px; font-weight:900; letter-spacing:-0.02em; }
+    .sv-tag { font-size:10px; letter-spacing:.28em; color:rgba(255,255,255,0.42); margin-top:4px; }
+    .sv-x { width:42px; height:42px; border-radius:12px; background:rgba(255,255,255,0.08); color:#fff; border:none; font-size:22px; font-weight:800; cursor:pointer; }
+    .sv-x:hover { background:rgba(255,255,255,0.16); }
+    .sv-tabs { display:flex; gap:4px; margin:14px 14px 4px; padding:4px; background:rgba(255,255,255,0.05); border-radius:12px; flex-wrap:wrap; }
+    .sv-tab { flex:1; min-width:72px; padding:9px 6px; border:0; cursor:pointer; background:transparent; color:rgba(255,255,255,0.55); font-size:11px; font-weight:800; letter-spacing:0.4px; border-radius:9px; transition:background .15s, color .15s; font-family:inherit; text-align:center; }
+    .sv-tab:hover { color:rgba(255,255,255,0.85); }
+    .sv-tab.active { background:#ff8a1e; color:#fff; box-shadow:0 2px 10px rgba(255,138,30,0.35); }
+    .sv-body { padding:14px 16px 18px; }
+    .sv-card { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:14px; padding:12px 14px; margin-bottom:12px; }
+    .sv-card-title { font-size:10px; font-weight:800; letter-spacing:.24em; color:rgba(255,255,255,0.56); margin-bottom:10px; }
+    .sv-row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:9px; }
+    .sv-grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .sv-mini-lbl { font-size:11.5px; color:rgba(255,255,255,0.62); }
+    .sv-val { margin-left:auto; font-size:11.5px; color:#fff; font-weight:800; }
+    .sv-input, .sv-select { width:100%; box-sizing:border-box; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.09); border-radius:12px; padding:10px 12px; color:#fff; font-size:13px; outline:none; font-family:inherit; }
+    .sv-input:focus, .sv-select:focus { border-color:rgba(255,255,255,0.32); }
+    .sv-select option { background:#14161b; }
+    .sv-range { width:100%; accent-color:#ff8a1e; }
+    .sv-btn { border:none; border-radius:12px; padding:10px 14px; font-size:12.5px; font-weight:800; cursor:pointer; background:rgba(255,255,255,0.09); color:#fff; font-family:inherit; }
+    .sv-btn:hover { background:rgba(255,255,255,0.14); }
+    .sv-btn.active { background:rgba(255,255,255,0.19); }
+    .sv-btn.on { background:#2ad78f; color:#082011; }
+    .sv-btn.danger { background:#ef5454; }
+    .sv-toggle { display:flex; align-items:center; gap:8px; font-size:12.5px; color:rgba(255,255,255,0.82); cursor:pointer; }
+    .sv-sw { position:relative; width:40px; height:21px; flex:none; border-radius:99px; background:rgba(255,255,255,0.12); transition:background .15s; }
+    .sv-sw:after { content:""; position:absolute; left:2px; top:2px; width:17px; height:17px; border-radius:50%; background:rgba(255,255,255,0.75); transition:left .15s, background .15s; }
+    .sv-toggle input { display:none; }
+    .sv-toggle input:checked + .sv-sw { background:#ff8a1e; }
+    .sv-toggle input:checked + .sv-sw:after { left:21px; background:#fff; }
+    .sv-colorrow { display:flex; align-items:center; gap:6px; position:relative; }
+    .sv-swatch { width:30px; height:26px; flex:none; border:1px solid rgba(255,255,255,0.25); border-radius:7px; cursor:pointer; }
+    .sv-swatch.open { border-color:#fff; box-shadow:0 0 0 2px rgba(255,138,30,0.4); }
+    .sv-pop { position:absolute; z-index:60; margin-top:6px; left:0; background:#14161b; border:1px solid rgba(255,255,255,0.16); border-radius:10px; padding:8px; width:212px; box-shadow:0 12px 34px rgba(0,0,0,0.7); }
+    .sv-pop-grid { display:grid; grid-template-columns:repeat(8,1fr); gap:4px; }
+    .sv-pop-sw { width:100%; padding-top:100%; border-radius:4px; cursor:pointer; border:1px solid rgba(255,255,255,0.15); }
+    .sv-pop-sw:hover { transform:scale(1.15); border-color:#fff; }
+    .sv-note { font-size:10.5px; color:rgba(255,255,255,0.5); line-height:1.5; margin-top:7px; }
+    .sv-preset { display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.07); border-radius:8px; padding:6px 10px; margin-top:6px; }
+    .sv-preset-name { flex:1; font-size:12px; font-weight:800; }
+    .sv-kbd { font-size:10px; padding:2px 7px; border-radius:4px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.16); color:rgba(255,255,255,0.65); letter-spacing:.1em; }
+    .sv-mini { position:absolute; right:16px; top:16px; width:26px; height:26px; border-radius:50%; background:rgba(8,10,14,0.8); border:1px solid rgba(255,255,255,0.18); color:rgba(255,255,255,0.75); pointer-events:auto; z-index:9; display:flex; align-items:center; justify-content:center; font-size:13px; cursor:pointer; }
