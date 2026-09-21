@@ -2,6 +2,19 @@
 // HUD-i në ekran është IDENTIK me HUD PRO v5.1 (shkronja, emoji, animacione — të paprekura).
 // Vetëm paneli i opsioneve është i ri (graphite + i bardhë, ngjyra koherente).
 
+// SURVIVAL HUD — ngarkon CSS-in si skedar i veçtë (më i besueshëm në CEF se <style> në template).
+(function() {
+  try {
+    if (typeof document === 'undefined' || !document.head) return;
+    if (document.getElementById('survivalhud-css')) return;
+    var link = document.createElement('link');
+    link.id = 'survivalhud-css';
+    link.rel = 'stylesheet';
+    link.href = '/ui/modules/apps/SurvivalHUD/app.css';
+    document.head.appendChild(link);
+  } catch (e) {}
+})();
+
 angular.module('beamng.apps')
 
 .directive('survivalhudPanel', ['$document', '$window', '$timeout', '$rootScope', function($document, $window, $timeout, $rootScope) {
@@ -499,10 +512,22 @@ angular.module('beamng.apps')
       };
 
       scope.panelStyle = function() {
+        // Rrjetë sigurie: edhe pa CSS, paneli duhet të jetë kuti e errët e klikueshme.
         return {
           position: 'absolute',
           left: Math.max(0, Number(scope.cfg.panelX || 18)) + 'px',
-          top: Math.max(0, Number(scope.cfg.panelY || 90)) + 'px'
+          top: Math.max(0, Number(scope.cfg.panelY || 90)) + 'px',
+          width: '620px',
+          maxWidth: '96vw',
+          maxHeight: '86vh',
+          overflow: 'auto',
+          background: '#101216',
+          color: '#f2f4f6',
+          borderRadius: '14px',
+          border: '1px solid rgba(255,255,255,.09)',
+          boxShadow: '0 24px 70px rgba(0,0,0,.55)',
+          pointerEvents: 'auto',
+          zIndex: 10
         };
       };
 
