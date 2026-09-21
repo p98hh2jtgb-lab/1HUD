@@ -1,0 +1,17 @@
+{
+  "name": "SURVIVAL HUD — Cyber",
+  "author": "daimy",
+  "version": "1.0.0",
+  "description": "Survival Chance HUD i pavarur me look CYBER: glitch, scanlines, këndore. Futura Extra Bold e ngulitur.",
+  "directive": "survivalhudPanel",
+  "domElement": "<survivalhud-panel></survivalhud-panel>",
+  "css": {
+    "left": "0px",
+    "top": "0px",
+    "width": "100%",
+    "height": "100%"
+  },
+  "category": "Gameplay",
+  "isAuxiliary": false,
+  "interactive": "required"
+}

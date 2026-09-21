@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="sq" ng-app="beamng.apps">
+<head>
+<meta charset="utf-8">
+<title>SURVIVAL HUD v1.0 — CYBER (DEMO)</title>
+<style>
+  html,body{margin:0;height:100%;overflow:hidden;font-family:'Segoe UI',Arial,sans-serif;
+    background:radial-gradient(1400px 620px at 62% 20%, #2c3a52 0%, #12151b 60%, #08090c 100%);}
+  #bar{position:fixed;left:0;right:0;bottom:0;z-index:999;display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+    padding:10px 14px;background:rgba(6,10,16,.95);border-top:1px solid rgba(0,229,255,.25);
+    font:600 12px/1.3 'Segoe UI',Arial,sans-serif;color:#c8f0f8;}
+  #bar b{color:#00e5ff;letter-spacing:.14em;}
+  #bar button{padding:8px 12px;border:1px solid rgba(0,229,255,.4);border-radius:8px;background:rgba(0,229,255,.1);color:#dff6fb;font-weight:800;cursor:pointer;}
+  #bar button:hover{background:rgba(0,229,255,.22);}
+</style>
+<script src="angular.min.js"></script>
+<script>
+  angular.module('beamng.apps', []);
+
+  // Demo: goditjet simulohen — në lojë kjo vjen automatikisht nga Lua (dëmi real i makinës).
+  var demoDamage = 0;
+  function demoHit(power) {
+    var rootEl = document.querySelector('.sv-root');
+    var sc = rootEl ? window.angular.element(rootEl).scope() : null;
+    if (sc && typeof sc.testHit === 'function') {
+      sc.testHit(power);            // përdor logjikën e vërtetë të modit (respekton edhe R)
+    } else {
+      var root = window.angular.element(document.body).injector().get('$rootScope');
+      demoDamage = Math.min(1, demoDamage + power);
+      root.$apply(function () {
+        root.$broadcast('survivalhud.cost', { ratio: demoDamage, speedKmh: 40 + Math.round(power * 260) });
+      });
+    }
+  }
+  function demoReset() {
+    localStorage.removeItem('survivalhud_config_v1');
+    location.reload();
+  }
+</script>
+<script src="/ui/modules/apps/SurvivalHUD/app.js"></script>
+</head>
+<body>
+<survivalhud-panel></survivalhud-panel>
+
+<div id="bar">
+  <b>SURVIVAL HUD v1.0 · CYBER · DEMO</b>
+  <button onclick="demoHit(0.07)">Goditje e lehtë</button>
+  <button onclick="demoHit(0.22)">Goditje e rëndë</button>
+  <button onclick="demoHit(0.55)">Aksident 💀</button>
+  <button onclick="demoReset()">Reset demo</button>
+  <span style="opacity:.65">Tastet: V=ON/OFF · R=reset run · H=paneli — në lojë dëmi matet vetë nga makina.</span>
+</div>
+</body>
+</html>

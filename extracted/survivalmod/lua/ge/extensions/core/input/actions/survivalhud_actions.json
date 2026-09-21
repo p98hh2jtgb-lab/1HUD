@@ -1,0 +1,32 @@
+{
+  "svhud_toggle": {
+    "cat": "gameplay",
+    "order": 9121,
+    "ctx": "tlua",
+    "actionMap": "Global",
+    "onDown": "extensions.load('survivalhud'); if extensions and extensions.survivalhud then extensions.survivalhud.svhudToggle() end",
+    "title": "SURVIVAL HUD: ON/OFF",
+    "desc": "Show or hide the Survival Chance HUD.",
+    "isBasic": true
+  },
+  "svhud_reset": {
+    "cat": "gameplay",
+    "order": 9122,
+    "ctx": "tlua",
+    "actionMap": "Global",
+    "onDown": "extensions.load('survivalhud'); if extensions and extensions.survivalhud then extensions.survivalhud.svhudReset() end",
+    "title": "SURVIVAL HUD: Reset run",
+    "desc": "Restart the survival run at 100%.",
+    "isBasic": true
+  },
+  "svhud_panel": {
+    "cat": "gameplay",
+    "order": 9123,
+    "ctx": "tlua",
+    "actionMap": "Global",
+    "onDown": "extensions.load('survivalhud'); if extensions and extensions.survivalhud then extensions.survivalhud.svhudPanel() end",
+    "title": "SURVIVAL HUD: Toggle options panel",
+    "desc": "Show or hide the SURVIVAL HUD config panel.",
+    "isBasic": true
+  }
+}
