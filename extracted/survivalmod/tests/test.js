@@ -1,13 +1,11 @@
-// TESTE FUNKSIONALE — SURVIVAL HUD v1.0
-// I ngarkon app.js e vertete me stub-a te Angular/BeamNG dhe i teston te gjitha funksionet.
-// Run: node tests/test.js
+// TESTE FUNKSIONALE — SURVIVAL HUD v1.1
+// HUD-i në ekran identik me v5.1; paneli i ri. Run: node tests/test.js
 
 'use strict';
 
 var fs = require('fs');
 var path = require('path');
 
-// ---------- stub-a ----------
 var storage = {};
 global.localStorage = {
   getItem: function(k) { return Object.prototype.hasOwnProperty.call(storage, k) ? storage[k] : null; },
@@ -20,11 +18,9 @@ global.window = {
   innerWidth: 1920, innerHeight: 1080
 };
 
-// setTimeout sinkron (persist eshte debounce)
 global.setTimeout = function(fn) { fn(); return 0; };
 global.clearTimeout = function() {};
 
-// koha e rreme per tween
 var realNow = Date.now.bind(Date);
 var fakeNow = realNow();
 Date.now = function() { return fakeNow; };
@@ -32,11 +28,7 @@ function advance(ms) { fakeNow += ms; }
 
 var capturedFactory = null;
 global.angular = {
-  module: function() {
-    return {
-      directive: function(name, arr) { capturedFactory = arr; }
-    };
-  },
+  module: function() { return { directive: function(name, arr) { capturedFactory = arr; } }; },
   extend: function(dst) {
     for (var i = 1; i < arguments.length; i++) {
       var src = arguments[i] || {};
@@ -51,57 +43,41 @@ global.angular = {
   isArray: Array.isArray
 };
 
-// $timeout stub me radhe
 var timeouts = [];
 function $timeout(fn, ms) { timeouts.push(fn); return timeouts.length - 1; }
 $timeout.cancel = function(id) { if (timeouts[id]) timeouts[id] = null; };
-function flush(max) {
-  max = max || 200;
-  var n = 0;
-  while (timeouts.some(function(f) { return f; }) && n < max) {
-    var batch = timeouts.filter(function(f) { return f; });
-    timeouts = [];
-    batch.forEach(function(f) { f(); });
-    advance(40);
-    n++;
-  }
-}
-
-var handlers = {};
-var watchers = [];
-var $rootScope = {
-  $on: function(name, fn) { handlers[name] = fn; return function() {}; },
-  $broadcast: function(name, data) {
-    if (handlers[name]) handlers[name]({}, data);
-  }
-};
-var $document = { on: function() {}, off: function() {} };
-
-// ---------- ngarko app.js ----------
-var appPath = path.join(__dirname, '..', 'ui', 'modules', 'apps', 'SurvivalHUD', 'app.js');
-eval(fs.readFileSync(appPath, 'utf8'));
-
-if (typeof capturedFactory !== 'function' && !Array.isArray(capturedFactory)) {
-  throw new Error('directive factory nuk u kap');
-}
-var factory = capturedFactory;
-var factoryFn = Array.isArray(factory) ? factory[factory.length - 1] : factory;
-var directiveDef = factoryFn($document, global.window, $timeout, $rootScope);
-if (typeof directiveDef !== 'object' || typeof directiveDef.link !== 'function') {
-  throw new Error('directive definition i pavlefshem');
-}
-
-// ---------- nderto scope ----------
-function fresh() { delete storage['survivalhud_config_v1']; return makeScope(); }
 function flushOneRound() {
   var batch = timeouts.filter(function(f) { return f; });
   timeouts = [];
   batch.forEach(function(f) { f(); });
   advance(40);
 }
+function flush(max) {
+  max = max || 200;
+  var n = 0;
+  while (timeouts.some(function(f) { return f; }) && n < max) { flushOneRound(); n++; }
+}
+
+var handlers = {};
+var watchers = [];
+var $rootScope = {
+  $on: function(name, fn) { handlers[name] = fn; return function() {}; },
+  $broadcast: function(name, data) { if (handlers[name]) handlers[name]({}, data); }
+};
+var $document = { on: function() {}, off: function() {} };
+
+var appPath = path.join(__dirname, '..', 'ui', 'modules', 'apps', 'SurvivalHUD', 'app.js');
+eval(fs.readFileSync(appPath, 'utf8'));
+
+var factoryFn = Array.isArray(capturedFactory) ? capturedFactory[capturedFactory.length - 1] : capturedFactory;
+var directiveDef = factoryFn($document, global.window, $timeout, $rootScope);
+if (typeof directiveDef !== 'object' || typeof directiveDef.link !== 'function') {
+  throw new Error('directive definition i pavlefshem');
+}
+
 function makeScope() {
   var scope = {
-    $watch: function(fn, cb) { watchers.push({ fn: fn, cb: cb }); return function() {}; },
+    $watch: function(fn, cb) { watchers.push({ fn: fn, cb: cb, last: undefined }); return function() {}; },
     $on: function(name, fn) { handlers[name] = fn; return function() {}; },
     $applyAsync: function(fn) { if (fn) fn(); },
     $broadcast: $rootScope.$broadcast
@@ -110,8 +86,8 @@ function makeScope() {
   directiveDef.link(scope, element);
   return scope;
 }
+function fresh() { delete storage['survivalhud_config_v2']; return makeScope(); }
 
-// ---------- assertion helpers ----------
 var passed = 0, failed = 0;
 function ok(cond, msg) {
   if (cond) { passed++; console.log('  ✓ ' + msg); }
@@ -122,228 +98,234 @@ function fireWatchers() { watchers.forEach(function(w) { var v = w.fn(); if (v !
 function cost(ratio, speed) { $rootScope.$broadcast('survivalhud.cost', { ratio: ratio, speedKmh: speed || 0 }); }
 
 // =====================================================
-console.log('\n[1] DEFAULTS & NORMALIZE');
-var scope = makeScope();
-ok(scope.cfg.on === true, 'on=true default');
-ok(scope.cfg.glitch === 2, 'glitch=2 default');
-ok(scope.cfg.formula === 'balanced', 'formula=balanced default');
-ok(scope.cfg.accentColor === '#00e5ff', 'accent=#00e5ff default');
-ok(scope.cfg.labelText === 'SURVIVAL CHANCE', 'labelText default');
-ok(Array.isArray(scope.cfg.presets), 'presets array bosh');
+console.log('\n[1] DEFAULTS & NORMALIZE — identike me v5.1');
+var s = fresh();
+ok(s.cfg.survivalOn === true, 'survivalOn=true');
+ok(s.cfg.survivalValueColor === '#42ff68', 'valueColor=#42ff68 (jeshile si v5.1)');
+ok(s.cfg.survivalDeltaColor === '#ff8a32', 'deltaColor=#ff8a32 (portokalli si v5.1)');
+ok(s.cfg.survivalSize === 54 && s.cfg.survivalPosY === 8, 'size=54, posY=8 si v5.1');
+ok(s.cfg.survivalLayout === 'inline' && s.cfg.survivalBackground === 'none', 'layout inline / bg none');
+ok(s.cfg.survivalShowStatus === true && s.cfg.survivalEmojiOn === true && s.cfg.survivalEmojiSize === 0.34, 'status+emoji ON, 0.34 (v5.1 post-migrim)');
+ok(s.cfg.survivalRollingCounter === false && s.cfg.survivalDeltaGhosts === false, 'rolling/ghost OFF (Smooth Pop si v5.1)');
+ok(s.cfg.survivalFormula === 'balanced', 'formula=balanced');
 
-// normalize me vlera te prishura
-var bad = { glitch: 9, formula: 'xxx', displayMode: 'hmm', statusPosition: 'mid', emojiMode: 'up', deltaPosition: 'left', posX: null, size: NaN, labelText: '' };
-storage['survivalhud_config_v1'] = JSON.stringify(bad);
-var scope2 = makeScope();
-ok(scope2.cfg.glitch === 2, 'normalize: glitch 9 -> 2');
-ok(scope2.cfg.formula === 'balanced', 'normalize: formula xxx -> balanced');
-ok(scope2.cfg.displayMode === 'always', 'normalize: displayMode -> always');
-ok(scope2.cfg.statusPosition === 'bottom', 'normalize: statusPosition -> bottom');
-ok(scope2.cfg.emojiMode === 'right', 'normalize: emojiMode -> right');
-ok(scope2.cfg.deltaPosition === 'right', 'normalize: deltaPosition -> right');
-ok(scope2.cfg.posX === 50 && scope2.cfg.size === 56, 'normalize: posX/size null/NaN -> default');
-ok(scope2.cfg.labelText === 'SURVIVAL CHANCE', 'normalize: labelText bosh -> default');
-delete storage['survivalhud_config_v1'];
+var bad = { survivalLayout: 'x', survivalBackground: 'y', survivalDisplayMode: 'z', survivalFormula: 'w',
+            survivalStatusPosition: 'mid', survivalEmojiMode: 'up', survivalDeltaPosition: 'left',
+            survivalPosX: null, survivalSize: NaN, survivalFontWeight: '123', survivalLabelText: '' };
+storage['survivalhud_config_v2'] = JSON.stringify(bad);
+var s2 = makeScope();
+ok(s2.cfg.survivalLayout === 'inline', 'normalize: layout -> inline');
+ok(s2.cfg.survivalBackground === 'none', 'normalize: bg -> none');
+ok(s2.cfg.survivalDisplayMode === 'always', 'normalize: displayMode -> always');
+ok(s2.cfg.survivalFormula === 'balanced', 'normalize: formula -> balanced');
+ok(s2.cfg.survivalStatusPosition === 'bottom' && s2.cfg.survivalEmojiMode === 'right' && s2.cfg.survivalDeltaPosition === 'right', 'normalize: pozicionet');
+ok(s2.cfg.survivalPosX === 50 && s2.cfg.survivalSize === 54, 'normalize: null/NaN -> default');
+ok(s2.cfg.survivalFontWeight === '900', 'normalize: fontWeight -> 900');
+ok(s2.cfg.survivalLabelText === 'SURVIVAL CHANCE', 'normalize: labelText bosh -> default');
 
 // =====================================================
 console.log('\n[2] MOTORI — TELEMETRIA');
-var s = makeScope();
-cost(0.30, 80);
-flush();
-ok(s.st.chance < 100, 'goditje 30% damage @80km/h e zbret chance nga 100 (=' + s.st.chance.toFixed(1) + ')');
-ok(s.st.chance > 20, '...dhe mbetet mbi 20 (jo e jashtezakonshme)');
-near(s.st.displayValue, s.st.chance, 2, 'displayValue tween-ohet deri ne chance');
-ok(s.st.damageRatio === 0.30, 'damageRatio = 0.30');
-
-var before = s.st.chance;
-cost(0.10, 0);   // dëmi bie (makina u qetësua) — s'duhet të ngjise
-ok(s.st.chance === before, 'chance NUK ngjitet kur dëmi bie (rregulli i run-it)');
-ok(s.st.damageRatio === 0.30, 'damageRatio mbetet max (0.30)');
-
-cost(0.31, 10);  // rritje e vogël me shpejtësi të ulët
-ok(s.st.chance <= before, 'chance vetëm bie ose mbetet');
-
-// TOTALLED
-var s2 = makeScope();
+var s3 = fresh();
+cost(0.30, 80); flush();
+ok(s3.chance < 100, 'goditje 30% @80km/h e zbret chance (=' + s3.chance.toFixed(1) + ')');
+near(s3.survival.displayValue, s3.chance, 2, 'displayValue tween deri ne chance');
+ok(s3.damageRatio === 0.30, 'damageRatio = 0.30');
+var before = s3.chance;
+cost(0.10, 0);
+ok(s3.chance === before, 'chance NUK ngjitet kur demi bie');
+ok(s3.damageRatio === 0.30, 'damageRatio mbetet max');
+var s4 = fresh();
 cost(0.999, 200); flush();
-ok(s2.st.chance === 0, 'ratio 0.999 = TOTALLED -> 0%');
-ok(s2.statusText() === 'NO CHANCE', 'statusi NO CHANCE ne 0%');
-ok(s2.emojiText() === '💀', 'emoji 💀 ne NO CHANCE');
+ok(s4.chance === 0, 'TOTALLED -> 0%');
+ok(s4.survivalStatus() === 'NO CHANCE', 'statusi NO CHANCE');
+ok(s4.survivalEmojiText() === '💀', 'emoji 💀');
 
 // =====================================================
-console.log('\n[3] STATUSI & EMOJI');
-var s3 = makeScope();
-[[95, 'SAFE', '😎'], [75, 'CAUTION', '😬'], [40, 'DANGER', '😰'], [15, 'CRITICAL', '😵'], [0, 'NO CHANCE', '💀']]
-.forEach(function(t) {
-  s3.st.displayValue = t[0];
-  ok(s3.statusText() === t[1], t[0] + '% -> ' + t[1]);
-  ok(s3.emojiText() === t[2], t[0] + '% -> ' + t[2]);
+console.log('\n[3] STATUSI & EMOJI (v5.1)');
+var s5 = fresh();
+[[95,'SAFE','😎'],[75,'CAUTION','😬'],[40,'DANGER','😰'],[15,'CRITICAL','😵'],[0,'NO CHANCE','💀']].forEach(function(t) {
+  s5.survival.displayValue = t[0];
+  ok(s5.survivalStatus() === t[1], t[0] + '% -> ' + t[1]);
+  ok(s5.survivalEmojiText() === t[2], t[0] + '% -> ' + t[2]);
 });
-
-// threshold-et custom
-var s3b = makeScope();
-s3b.cfg.warningThreshold = 70; s3b.cfg.criticalThreshold = 35;
-s3b.st.displayValue = 50;
-ok(s3b.statusText() === 'DANGER', 'threshold custom: 50% -> DANGER (warn=70)');
+var s5b = fresh();
+s5b.cfg.survivalWarningThreshold = 70; s5b.cfg.survivalCriticalThreshold = 35;
+s5b.survival.displayValue = 50;
+ok(s5b.survivalStatus() === 'DANGER', 'threshold custom: 50% -> DANGER');
 
 // =====================================================
 console.log('\n[4] FORMULAT');
 function oneShot(formula, ratio, speed) {
-  var x = makeScope();
-  x.cfg.formula = formula;
+  var x = fresh(); x.cfg.survivalFormula = formula;
   cost(ratio, speed); flush();
-  return x.st.chance;
+  return x.chance;
 }
 var forgiving = oneShot('forgiving', 0.4, 120);
 var balanced  = oneShot('balanced', 0.4, 120);
 var hardcore  = oneShot('hardcore', 0.4, 120);
 ok(forgiving > balanced && balanced > hardcore,
    'forgiving(' + forgiving.toFixed(1) + ') > balanced(' + balanced.toFixed(1) + ') > hardcore(' + hardcore.toFixed(1) + ')');
-var dmgOnly = oneShot('damageOnly', 0.05, 300);
-var withImpact = oneShot('balanced', 0.05, 300);
-ok(dmgOnly > withImpact, 'damageOnly e injoron shpejtesine (' + dmgOnly.toFixed(1) + ' > ' + withImpact.toFixed(1) + ')');
-
-// pesha me 0
-var s4 = makeScope();
-s4.cfg.impactWeight = 0; s4.cfg.speedWeight = 0;
-cost(0.05, 300); flush();
-near(s4.st.chance, oneShot('damageOnly', 0.05, 0), 0.01, 'pesha 0 = damageOnly');
-
-// minAlive
-var s5 = makeScope();
-s5.cfg.minAlive = 10;
+ok(oneShot('damageOnly', 0.05, 300) > oneShot('balanced', 0.05, 300), 'damageOnly e injoron shpejtesine');
+var s6 = fresh();
+s6.cfg.survivalMinAlive = 10;
 cost(0.9, 250); flush();
-ok(s5.st.chance >= 10, 'minAlive=10 e mban chance mbi 10 (=' + s5.st.chance.toFixed(1) + ')');
+ok(s6.chance >= 10, 'minAlive=10 e mban mbi 10 (=' + s6.chance.toFixed(1) + ')');
 
 // =====================================================
 console.log('\n[5] VEPRIMET');
-var s6 = makeScope();
-s6.toggleHud();
-ok(s6.cfg.on === false, 'toggleHud() e fik');
-ok(s6.hudVisible() === false, 'hudVisible()=false kur s\'on');
-s6.toggleHud();
-ok(s6.cfg.on === true, 'toggleHud() e ndez prapë');
-ok(JSON.parse(storage['survivalhud_config_v1']).on === true, 'persist shkruan ne localStorage');
+var s7 = fresh();
+s7.toggleHud();
+ok(s7.cfg.survivalOn === false && s7.survivalVisible() === false, 'toggleHud e fik');
+s7.toggleHud();
+ok(s7.cfg.survivalOn === true && s7.survivalVisible() === true, 'toggleHud e ndez');
+ok(JSON.parse(storage['survivalhud_config_v2']).survivalOn === true, 'persist shkruan');
+s7.testHit(0.4); flush();
+ok(s7.chance < 100, 'testHit e zbret');
+s7.resetRun();
+ok(s7.chance === 100 && s7.survival.displayValue === 100 && s7.damageRatio === 0, 'resetRun kthen 100');
 
-// reset run
-s6.testHit(0.4); flush();
-ok(s6.st.chance < 100, 'testHit e zbret chance');
-s6.resetRun();
-ok(s6.st.chance === 100 && s6.st.displayValue === 100 && s6.st.damageRatio === 0, 'resetRun() kthen 100% + damage 0');
-ok(s6.hudVisible() === true, 'hudVisible pas reset');
-
-// action nga bindings
-var s7 = makeScope();
-handlers['survivalhud.action']({}, { action: 'toggle' });
-ok(s7.cfg.on === false, 'action toggle e fik HUD-in');
-handlers['survivalhud.action']({}, { action: 'reset' });
-ok(s7.st.chance === 100, 'action reset kthen 100');
-handlers['survivalhud.action']({}, { action: 'panel' });
-ok(s7.cfg.showPanel === false, 'action panel e mbyll panelin');
-
-// visibility modes
 var s8 = fresh();
-s8.cfg.displayMode = 'danger'; s8.cfg.dangerShowAt = 55;
-s8.st.displayValue = 80;
-ok(s8.hudVisible() === false, 'danger mode: 80% > 55 -> e fshehur');
-s8.st.displayValue = 40;
-ok(s8.hudVisible() === true, 'danger mode: 40% <= 55 -> e dukshme');
+handlers['survivalhud.action']({}, { action: 'toggle' });
+ok(s8.cfg.survivalOn === false, 'action toggle');
+handlers['survivalhud.action']({}, { action: 'reset' });
+ok(s8.chance === 100, 'action reset');
+handlers['survivalhud.action']({}, { action: 'panel' });
+ok(s8.cfg.survivalShowPanel === false, 'action panel');
 
-var s8b = fresh();
-s8b.cfg.displayMode = 'change'; s8b.st.visible = false;
-ok(s8b.hudVisible() === false, 'change mode: e fshehur para ndryshimit');
+var s9 = fresh();
+s9.cfg.survivalDisplayMode = 'danger'; s9.cfg.survivalDangerShowAt = 55;
+s9.chance = 80; s9.survival.displayValue = 80;
+ok(s9.survivalVisible() === false, 'danger mode: 80% > 55 fshehur');
+s9.chance = 40; s9.survival.displayValue = 40;
+ok(s9.survivalVisible() === true, 'danger mode: 40% <= 55 dukshme');
+
+var s10 = fresh();
+s10.cfg.survivalDisplayMode = 'change'; s10.survival.visible = false;
+ok(s10.survivalVisible() === false, 'change mode: fshehur para ndryshimit');
 cost(0.25, 60);
-ok(s8b.hudVisible() === true, 'change mode: duket menjehere pas goditjes');
+ok(s10.survival.visible === true, 'change mode: duket pas goditjes');
 flush(200);
-ok(s8b.hudVisible() === false, 'change mode: auto-hide pas ' + s8b.cfg.autoHideMs + 'ms');
+ok(s10.survival.visible === false, 'change mode: auto-hide pas ' + s10.cfg.survivalAutoHideMs + 'ms');
 
 // =====================================================
-console.log('\n[6] KLAset & STILET');
-var s9 = makeScope();
-s9.cfg.glitch = 3; s9.cfg.brackets = false; s9.cfg.scanlines = false;
-var cls = s9.hudClass();
-ok(cls['glitch-3'] === true, 'hudClass: glitch-3');
-ok(cls['no-brackets'] === true, 'hudClass: no-brackets');
-ok(cls['no-scan'] === true, 'hudClass: no-scan');
-ok(cls['edit-position'] === false, 'hudClass: edit-position off default');
-
-var st9 = s9.hudStyle();
-ok(st9.left === '50%' && st9.top === '11%', 'hudStyle: pozicioni %');
-ok(st9.fontSize === '56px', 'hudStyle: madhesia px');
-ok(st9['--acc'] === '#00e5ff', 'hudStyle: --acc accent');
-ok(String(st9['--acc-soft']).indexOf('rgba(0,229,255,0.35)') === 0, 'hudStyle: --acc-soft rgba');
-
-// numStyle me dynamic color
-var s10 = makeScope();
-s10.st.displayValue = 90;
-ok(s10.numStyle().color === s10.cfg.valueColor, 'numStyle: 90% = ngjyra safe');
-s10.st.displayValue = 10;
-ok(s10.numStyle().color !== s10.cfg.valueColor, 'numStyle: 10% = ngjyra kritike (dyn)');
-s10.cfg.dynamicColor = false;
-ok(s10.numStyle().color === s10.cfg.valueColor, 'numStyle: dynamicColor off = gjithmonë safe');
-
-// =====================================================
-console.log('\n[7] DELTA & HIT');
+console.log('\n[6] KLAset & STILET (v5.1)');
 var s11 = fresh();
-s11.cfg.deltaMin = 1;
-cost(0.25, 120);
-ok(s11.st.deltaVisible === true, 'delta -X% dukshme menjehere pas goditjes');
-ok(/^-[\d.]+%$/.test(s11.st.deltaText), 'deltaText format ok: ' + s11.st.deltaText);
-ok(s11.st.hit === false, 'hit burst ne pritje (delay 10ms per rindezjen CSS)');
-flushOneRound();
-ok(s11.st.hit === true, 'hit burst aktiv pas goditjes');
-flushOneRound();
-ok(s11.st.hit === false, 'hit burst fiket pas animacionit');
-ok(s11.st.deltaVisible === false, 'delta fshihet pas kohëzgjatjes');
+s11.cfg.survivalLayout = 'stacked'; s11.cfg.survivalBackground = 'pill'; s11.cfg.survivalDeltaPosition = 'top';
+var cls = s11.survivalClass();
+ok(cls['layout-stacked'] === true, 'survivalClass: layout-stacked');
+ok(cls['bg-pill'] === true, 'survivalClass: bg-pill');
+ok(cls['delta-top'] === true, 'survivalClass: delta-top');
+ok(cls['status-bottom'] === true, 'survivalClass: status-bottom default');
+ok(cls['edit-position'] === false, 'survivalClass: edit-position off');
 
-// delta minimale nuk shfaqet
+var st = s11.survivalStyle();
+ok(st.left === '50%' && st.top === '8%', 'survivalStyle: 50%/8%');
+ok(st.fontSize === '54px', 'survivalStyle: 54px');
+ok(st.fontStyle === 'italic', 'survivalStyle: italic (si v5.1)');
+s11.cfg.survivalBackground = 'none';
+ok(s11.survivalStyle().backgroundColor === 'transparent', 'survivalStyle: bg transparent kur none');
+s11.cfg.survivalBackground = 'pill';
+s11.cfg.survivalBackground = 'card';
+ok(String(s11.survivalStyle().backgroundColor).indexOf('rgba(7,16,22,0.55)') === 0, 'survivalStyle: bg card rgba');
+s11.cfg.survivalItalic = false;
+ok(s11.survivalStyle().fontStyle === 'normal', 'survivalStyle: italic off -> normal');
+
+// numri: jeshile -> portokalli -> kuqe (si v5.1)
 var s12 = fresh();
-s12.cfg.deltaMin = 50;
+s12.survival.displayValue = 90;
+ok(s12.survivalColor() === '#42ff68', 'survivalColor: 90% jeshile e qarte');
+s12.survival.displayValue = 35;
+ok(s12.survivalColor() !== '#42ff68' && s12.survivalColor().charAt(0) === '#', 'survivalColor: 35% miks portokalli');
+s12.survival.displayValue = 5;
+var cLow = s12.survivalColor();
+ok(cLow !== '#42ff68', 'survivalColor: 5% drejt kuqes (#' + cLow + ')');
+s12.cfg.survivalDynamicColor = false;
+ok(s12.survivalColor() === '#42ff68', 'survivalColor: dynamic off = gjithmone jeshile');
+
+// valueStyle me glow si v5.1
+var vs = s12.survivalValueStyle();
+ok(String(vs.textShadow).indexOf('0 0 10px') > -1, 'survivalValueStyle: glow 10px default');
+ok(vs.fontWeight === '900', 'survivalValueStyle: weight 900');
+
+// meterStyle
+s12.survival.displayValue = 63;
+var ms = s12.survivalMeterStyle();
+ok(ms.width === '63%', 'survivalMeterStyle: width 63%');
+
+// labelStyle
+var ls = s12.survivalLabelStyle();
+ok(ls.color === '#ffffff' && ls.fontSize === '0.6em', 'survivalLabelStyle: bardhe 0.6em');
+
+// deltaStyle me opacity/scale (per ghosts)
+var ds = s12.survivalDeltaStyle(0.34, 0.86);
+ok(ds.opacity === 0.34 && String(ds.transform).indexOf('0.86') > -1, 'survivalDeltaStyle: ghost .34/.86');
+
+// =====================================================
+console.log('\n[7] DELTA / PULSE / ROLLING (v5.1 sjellja)');
+var s13 = fresh();
+cost(0.25, 120);
+ok(s13.survival.deltaVisible === false, 'delta ne pritje (delay 12ms si v5.1)');
+flushOneRound();
+ok(s13.survival.deltaVisible === true, 'delta -X% dukshme pas goditjes');
+ok(/^-[\d.]+%$/.test(s13.survival.deltaText), 'deltaText format: ' + s13.survival.deltaText);
+ok(s13.survival.pulse === true, 'pulse aktiv');
+ok(s13.survival.oldValue === 100, 'oldValue=100 (vlera para goditjes)');
+flushOneRound();
+ok(s13.survival.rolling === false, 'rolling OFF me default (Smooth Pop)');
+var s13b = fresh();
+s13b.cfg.survivalRollingCounter = true;
+cost(0.25, 120); flushOneRound();
+ok(s13b.survival.rolling === true, 'rolling ON kur aktivizohet');
+flushOneRound();
+ok(s13b.survival.rolling === false, 'rolling fiket pas rollDuration');
+
+var s14 = fresh();
+s14.cfg.survivalDeltaMin = 50;
 cost(0.05, 30); flush();
-ok(s12.st.deltaVisible === false, 'delta nën minimum nuk shfaqet');
+ok(s14.survival.deltaVisible === false, 'delta nen minimum nuk shfaqet');
 
 // =====================================================
 console.log('\n[8] PRESETS');
-var s13 = makeScope();
-s13.cfg.posX = 33; s13.cfg.size = 90; s13.cfg.accentColor = '#ff2d6f';
-s13.presetName = 'Testi';
-s13.savePreset();
-ok(s13.cfg.presets.length === 1 && s13.cfg.presets[0].name === 'Testi', 'savePreset e ruan');
-var s13b = makeScope();
-s13b.cfg.posX = 50;
-s13b.loadPreset(s13.cfg.presets[0]);
-ok(s13b.cfg.posX === 33 && s13b.cfg.size === 90 && s13b.cfg.accentColor === '#ff2d6f', 'loadPrest e ngarkon të gjitha');
-s13b.deletePreset(s13b.cfg.presets[0]);
-ok(s13b.cfg.presets.length === 0, 'deletePreset e fshin');
+var s15 = fresh();
+s15.cfg.survivalPosX = 33; s15.cfg.survivalSize = 90; s15.cfg.survivalValueColor = '#ff2d6f';
+s15.presetName = 'Testi';
+s15.savePreset();
+ok(s15.cfg.presets.length === 1 && s15.cfg.presets[0].name === 'Testi', 'savePreset');
+var s15b = fresh();
+s15b.cfg.survivalPosX = 50;
+s15b.loadPreset(s15.cfg.presets[0]);
+ok(s15b.cfg.survivalPosX === 33 && s15b.cfg.survivalSize === 90 && s15b.cfg.survivalValueColor === '#ff2d6f', 'loadPreset i plote');
+ok(s15b.cfg.survivalOn === true, 'loadPreset NUK e cek survivalOn (gjendja ruhet jashte)');
+s15b.deletePreset(s15b.cfg.presets[0]);
+ok(s15b.cfg.presets.length === 0, 'deletePreset');
 
 // =====================================================
-console.log('\n[9] EMOJI PULSE ($watch)');
-var s14 = fresh();
-s14.st.displayValue = 90;
+console.log('\n[9] EMOJI PULSE');
+var s16 = fresh();
+s16.survival.displayValue = 90;
 fireWatchers();
-s14.st.displayValue = 40;
+s16.survival.displayValue = 40;
 fireWatchers();
 flushOneRound();
-ok(s14.st.emojiPulse === true, 'emojiPulse aktivizohet kur ndryshon statusi');
+ok(s16.survival.emojiPulse === true, 'emojiPulse aktivizohet kur ndryshon statusi');
 flushOneRound();
-ok(s14.st.emojiPulse === false, 'emojiPulse fiket pas 520ms');
+ok(s16.survival.emojiPulse === false, 'emojiPulse fiket pas 520ms');
 
 // =====================================================
 console.log('\n[10] NGJYRAT (picker)');
-var s15 = makeScope();
-s15.togglePicker('accentColor', { stopPropagation: function() {} });
-ok(s15.isPickerOpen('accentColor') === true, 'togglePicker hap');
-s15.pickColor('accentColor', '#ff2d6f');
-ok(s15.cfg.accentColor === '#ff2d6f' && s15.isPickerOpen('accentColor') === false, 'pickColor vendos + mbyll');
-s15.cfg.accentColor__raw = '#00ffa3';
-s15.setColorField('accentColor');
-ok(s15.cfg.accentColor === '#00ffa3', 'setColorField pranon hex valid');
-s15.cfg.accentColor__raw = 'gabim';
-s15.cfg.accentColor = '#123456';
-s15.setColorField('accentColor');
-ok(s15.cfg.accentColor === '#123456', 'setColorField refuzon hex invalid');
+var s17 = fresh();
+s17.togglePicker('survivalValueColor', { stopPropagation: function() {} });
+ok(s17.isPickerOpen('survivalValueColor') === true, 'togglePicker hap');
+s17.pickColor('survivalValueColor', '#ff2d6f');
+ok(s17.cfg.survivalValueColor === '#ff2d6f' && s17.isPickerOpen('survivalValueColor') === false, 'pickColor vendos + mbyll');
+s17.cfg.survivalValueColor__raw = '#00ffa3';
+s17.setColorField('survivalValueColor');
+ok(s17.cfg.survivalValueColor === '#00ffa3', 'setColorField pranon hex valid');
+s17.cfg.survivalValueColor__raw = 'gabim';
+s17.cfg.survivalValueColor = '#123456';
+s17.setColorField('survivalValueColor');
+ok(s17.cfg.survivalValueColor === '#123456', 'setColorField refuzon hex invalid');
 
-// =====================================================
 console.log('\n============================================');
 console.log('REZULTATI: ' + passed + ' kaluan, ' + failed + ' deshtuan');
 console.log('============================================');

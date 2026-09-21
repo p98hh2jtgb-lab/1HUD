@@ -1,13 +1,7 @@
 <div class="sv-root" tabindex="0">
   <style>
     creatorpack-panel, survivalhud-panel, .sv-root { display:block; width:100%; height:100%; }
-    .sv-root {
-      position:absolute; inset:0; pointer-events:none; outline:none;
-      font-family:'Futura Extra Bold','Futura','Century Gothic','Segoe UI',Arial,sans-serif;
-      color:#eaffff;
-      --acc:#00e5ff;
-      --acc-soft:rgba(0,229,255,.35);
-    }
+    .sv-root { position:absolute; inset:0; pointer-events:none; outline:none; color:#fff; }
     @font-face {
       font-family:'Futura Extra Bold';
       font-weight:400 999; font-style:normal; font-display:swap;
@@ -23,235 +17,185 @@
           url(data:font/woff2;base64,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) format('woff2');
     }
 
-    /* ============ HUD (në ekran) — CYBER ============ */
-    .sv-hud {
-      position:absolute; z-index:7;
+    /* ==================================================
+       HUD NË EKRAN — IDENTIK me HUD PRO v5.1 (i paprekur)
+       ================================================== */
+/* ==================================================
+       v4.3 — SURVIVAL CHANCE HUD
+       ================================================== */
+    .pf-survival {
+      position:absolute;
+      z-index:7;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:.12em;
+      white-space:nowrap;
+      pointer-events:none;
+      user-select:none;
       transform:translate(-50%,-50%);
-      display:flex; flex-direction:column; align-items:center;
-      padding:.34em .62em .30em;
-      background:rgba(6,10,16,.72);
-      border:1px solid var(--acc-soft);
-      border-radius:.16em;
-      backdrop-filter:blur(10px) saturate(140%);
-      box-shadow:0 18px 50px rgba(0,0,0,.48), inset 0 0 24px rgba(0,0,0,.35);
-      line-height:1; white-space:nowrap; user-select:none;
-      transition:opacity .18s ease;
+      filter:drop-shadow(0 4px 10px rgba(0,0,0,.72));
+      font-family:'Futura Extra Bold','Futura','Century Gothic','Segoe UI',Arial,sans-serif;
+      font-style:italic;
+      line-height:1;
     }
-    .sv-hud.edit-position { pointer-events:auto; cursor:move; border-style:dashed; border-color:var(--acc); background:rgba(3,9,13,.55); }
-
-    /* këndet */
-    .sv-c { position:absolute; width:.34em; height:.34em; border:0 solid var(--acc); opacity:.95; }
-    .sv-c1 { left:-.10em; top:-.10em; border-left-width:3px; border-top-width:3px; }
-    .sv-c2 { right:-.10em; top:-.10em; border-right-width:3px; border-top-width:3px; }
-    .sv-c3 { left:-.10em; bottom:-.10em; border-left-width:3px; border-bottom-width:3px; }
-    .sv-c4 { right:-.10em; bottom:-.10em; border-right-width:3px; border-bottom-width:3px; }
-    .sv-hud.no-brackets .sv-c { display:none; }
-
-    /* scanlines */
-    .sv-scan {
-      position:absolute; inset:0; border-radius:inherit; pointer-events:none; overflow:hidden;
+    .pf-survival.edit-position {
+      pointer-events:auto;
+      cursor:move;
+      padding:10px 14px;
+      border:1px dashed rgba(20,229,242,.72);
+      border-radius:10px;
+      background:rgba(3,9,13,.34);
     }
-    .sv-scan:after {
-      content:""; position:absolute; inset:0;
-      background:repeating-linear-gradient(to bottom, rgba(255,255,255,.05) 0 1px, transparent 1px 4px);
+    .pf-survival.font-narrow { font-family:'Arial Narrow','Segoe UI',Arial,sans-serif; }
+    .pf-survival-label {
+      font-size:.60em;
+      font-weight:950;
+      letter-spacing:-.025em;
+      -webkit-text-stroke:1px rgba(0,0,0,.72);
+      text-shadow:0 2px 2px rgba(0,0,0,.86);
     }
-    .sv-hud.no-scan .sv-scan { display:none; }
-
-    .sv-label {
-      font-size:.26em; font-weight:900; letter-spacing:.42em; text-indent:.42em;
-      color:var(--acc); opacity:.96;
-      text-shadow:0 2px 8px rgba(0,0,0,.8);
-      margin-bottom:.22em;
-    }
-    .sv-main { position:relative; display:flex; align-items:baseline; justify-content:center; }
-    .sv-num {
-      position:relative; font-size:1em; font-weight:900; letter-spacing:-.03em;
-      text-shadow:0 4px 14px rgba(0,0,0,.75), 0 0 var(--glow,0.7em) currentColor;
+    .pf-survival-value {
+      position:relative;
+      display:inline-block;
+      font-size:1em;
+      font-weight:950;
+      letter-spacing:-.055em;
+      -webkit-text-stroke:1px rgba(0,0,0,.60);
       transform-origin:50% 60%;
-    }
-    .sv-num i { font-style:normal; font-size:.55em; margin-left:.05em; }
-    .sv-ghost { position:absolute; left:0; top:0; opacity:0; pointer-events:none; }
-    .sv-ghost.g-r { color:#ff2d6f; }
-    .sv-ghost.g-c { color:var(--acc); }
-    /* glitch i vazhdueshëm i lehtë (niveli 2+) */
-    @keyframes svGlitchAmbient {
-      0%,86%,100% { opacity:0; transform:translate(0,0); }
-      88% { opacity:.30; transform:translate(calc(var(--g) * -1px), 1px); }
-      91% { opacity:.22; transform:translate(calc(var(--g) * 1px), -1px); }
-      94% { opacity:.16; transform:translate(calc(var(--g) * .5px), 1px); }
-    }
-    .sv-hud.glitch-2 .sv-ghost { animation:svGlitchAmbient 3.2s steps(1) infinite; }
-    .sv-hud.glitch-3 .sv-ghost { animation:svGlitchAmbient 1.7s steps(1) infinite; }
-    /* shpërthim glitch në goditje */
-    @keyframes svGlitchHit {
-      0%   { opacity:0; transform:translate(0,0) scale(1); }
-      12%  { opacity:.85; transform:translate(calc(var(--g) * -2.4px), 2px) scale(1.02); }
-      26%  { opacity:.55; transform:translate(calc(var(--g) * 2.2px), -2px) scale(.99); }
-      44%  { opacity:.30; transform:translate(calc(var(--g) * -1px), 1px) scale(1); }
-      100% { opacity:0; transform:translate(0,0) scale(1); }
-    }
-    .sv-hud.hit .sv-ghost { animation:svGlitchHit var(--hitms,420ms) cubic-bezier(.2,.8,.3,1) forwards; }
-    @keyframes svTick { 0%{transform:scale(1)} 38%{transform:scale(1.06)} 100%{transform:scale(1)} }
-    .sv-hud.hit .sv-num { animation:svTick var(--hitms,420ms) cubic-bezier(.2,1.3,.4,1); }
-
-    .sv-delta {
-      position:absolute; left:100%; top:6%; margin-left:.34em;
-      font-size:.34em; font-weight:900; letter-spacing:-.02em;
-      padding:.14em .26em .17em; border-radius:.30em;
-      background:rgba(7,10,14,.85); border:1px solid currentColor;
-      box-shadow:0 4px 12px rgba(0,0,0,.5);
-      animation:svDeltaPop var(--dms,850ms) cubic-bezier(.2,.8,.25,1) forwards;
       will-change:transform,opacity;
+      backface-visibility:hidden;
     }
-    .sv-hud.delta-top .sv-delta { left:50%; top:auto; bottom:100%; margin:0 0 .18em; }
-    .sv-hud.delta-bottom .sv-delta { left:50%; top:100%; margin:.18em 0 0; }
-    @keyframes svDeltaPop {
-      0% { opacity:0; transform:translateY(5px) scale(.4); }
-      14% { opacity:1; transform:translateY(0) scale(1.22); }
-      28% { transform:scale(.95); }
-      42% { transform:scale(1); }
-      74% { opacity:1; }
+    .pf-survival-value i {
+      margin-left:.04em;
+      font-size:.58em;
+      font-style:italic;
+      vertical-align:.12em;
+      letter-spacing:0;
+    }
+    .pf-survival.pulse .pf-survival-value {
+      animation:pfSurvivalTick 360ms cubic-bezier(.2,1.35,.4,1);
+    }
+    @keyframes pfSurvivalTick {
+      0% { transform:scale(1); }
+      38% { transform:scale(1.075); }
+      100% { transform:scale(1); }
+    }
+    .pf-survival-delta {
+      position:absolute;
+      left:100%;
+      top:1%;
+      margin-left:.32em;
+      font-size:.37em;
+      font-weight:950;
+      letter-spacing:-.03em;
+      -webkit-text-stroke:.55px rgba(0,0,0,.72);
+      padding:.10em .20em .12em;
+      border-radius:.28em;
+      background:rgba(7,10,14,.78);
+      border:1px solid currentColor;
+      box-shadow:0 3px 9px rgba(0,0,0,.42);
+      text-shadow:0 2px 3px rgba(0,0,0,.92);
+      will-change:transform,opacity;
+      animation:pfSurvivalDeltaPop 900ms cubic-bezier(.2,.8,.25,1) forwards;
+    }
+    @keyframes pfSurvivalDeltaPop {
+      0% { opacity:0; transform:translateY(5px) scale(.38); }
+      16% { opacity:1; transform:translateY(0) scale(1.24); }
+      30% { opacity:1; transform:translateY(0) scale(.94); }
+      44% { opacity:1; transform:translateY(0) scale(1); }
+      76% { opacity:1; transform:translateY(-2px) scale(1); }
       100% { opacity:0; transform:translateY(-9px) scale(.88); }
     }
-    .sv-status-wrap {
-      display:flex; align-items:center; justify-content:center; gap:.16em;
-      margin-top:.20em; line-height:1;
+    .pf-survival-main { position:relative; display:flex; align-items:baseline; justify-content:center; gap:.34em; }
+    .pf-survival-counter { position:relative; display:inline-block; line-height:1; }
+    .pf-survival-old {
+      position:absolute; left:0; bottom:0; z-index:0;
+      color:currentColor; font-size:1em; font-weight:950; letter-spacing:-.055em;
+      opacity:0; pointer-events:none; white-space:nowrap;
     }
-    .sv-status-wrap.emoji-left { flex-direction:row-reverse; }
-    .sv-hud.status-top .sv-status-wrap { order:-1; margin:0 0 .18em; }
-    .sv-status { font-size:.24em; font-weight:900; letter-spacing:.30em; text-indent:.30em; text-shadow:0 2px 6px rgba(0,0,0,.85); }
-    .sv-emoji {
+    .pf-survival-old i { font-size:.58em; font-style:italic; vertical-align:.12em; }
+    .pf-survival.rolling .pf-survival-old { animation:pfRollOld 430ms cubic-bezier(.2,.75,.3,1) forwards; }
+    .pf-survival.rolling .pf-survival-value { animation:pfRollNew 430ms cubic-bezier(.2,1.2,.35,1); }
+    @keyframes pfRollOld { 0%{opacity:.58;transform:translateY(0) scale(1)} 100%{opacity:0;transform:translateY(-.72em) scale(.86)} }
+    @keyframes pfRollNew { 0%{opacity:.20;transform:translateY(.55em) scale(.90)} 60%{opacity:1;transform:translateY(-.05em) scale(1.04)} 100%{opacity:1;transform:translateY(0) scale(1)} }
+    .pf-survival.layout-stacked .pf-survival-main { flex-direction:column; align-items:center; gap:.03em; }
+    .pf-survival.layout-stacked .pf-survival-label { letter-spacing:.12em; }
+    .pf-survival.layout-compact .pf-survival-label { display:none; }
+    .pf-survival.layout-compact .pf-survival-value { font-size:.82em; }
+    .pf-survival.bg-pill { padding:.20em .42em .24em; border-radius:999px; border:1px solid rgba(255,255,255,.13); backdrop-filter:blur(8px); }
+    .pf-survival.bg-card { padding:.25em .42em .30em; border-radius:.22em; border:1px solid rgba(255,255,255,.13); box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 8px 24px rgba(0,0,0,.32); backdrop-filter:blur(10px); }
+    .pf-survival-status { font-style:normal; margin-top:.12em; text-shadow:0 2px 4px rgba(0,0,0,.88),0 0 8px currentColor; transition:font-size .18s ease,letter-spacing .18s ease; }
+    .pf-survival-meter { width:3.0em; height:.07em; margin-top:.12em; border-radius:999px; overflow:hidden; background:rgba(255,255,255,.14); box-shadow:0 1px 4px rgba(0,0,0,.65); }
+    .pf-survival-meter > div { height:100%; border-radius:inherit; transition:width 360ms cubic-bezier(.22,1,.36,1),background 240ms ease; box-shadow:0 0 7px currentColor; }
+    .pf-survival.delta-top .pf-survival-delta { left:50%; top:auto; bottom:100%; margin:0 0 .12em; }
+    .pf-survival.delta-bottom .pf-survival-delta { left:50%; top:100%; margin:.12em 0 0; }
+    .pf-delta-ghost { pointer-events:none; animation:none!important; }
+    .pf-delta-ghost.ghost-one { margin-left:.56em; margin-top:.10em; }
+    .pf-delta-ghost.ghost-two { margin-left:.82em; margin-top:.22em; }
+    .pf-survival.status-top .pf-survival-status-wrap { order:-1; margin-top:0; margin-bottom:.12em; }
+    @keyframes pfStatusPop { 0%{transform:scale(1)} 40%{transform:scale(1.10)} 100%{transform:scale(1)} }
+    .pf-survival.status-pulse .pf-survival-status { animation:pfStatusPop 430ms cubic-bezier(.2,1.3,.35,1); }
+    .pf-survival-status-wrap { display:flex; align-items:center; justify-content:center; gap:.09em; margin-top:.10em; line-height:1; }
+    .pf-survival-status-wrap.emoji-right { flex-direction:row-reverse; }
+    .pf-survival-status-wrap.emoji-replace { margin-top:.08em; }
+    .pf-survival-emoji {
+      display:inline-block; flex:none; align-self:center; line-height:1;
       font-family:'Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji',sans-serif;
-      font-weight:400; font-style:normal; letter-spacing:0; text-indent:0;
-      filter:drop-shadow(0 2px 3px rgba(0,0,0,.5));
+      font-style:normal; font-weight:400; letter-spacing:0;
+      text-shadow:none; filter:drop-shadow(0 2px 3px rgba(0,0,0,.48));
+      transform-origin:50% 60%; backface-visibility:hidden;
     }
-    @keyframes svEmojiPop { 0%{opacity:0;transform:scale(.3) rotate(-12deg)} 45%{opacity:1;transform:scale(1.25) rotate(5deg)} 70%{transform:scale(.94)} 100%{opacity:1;transform:scale(1)} }
-    .sv-status-wrap.emoji-pop .sv-emoji { animation:svEmojiPop 500ms cubic-bezier(.2,1.25,.35,1); }
-    @keyframes svStatusPop { 0%{transform:scale(1)} 42%{transform:scale(1.12)} 100%{transform:scale(1)} }
-    .sv-hud.status-pulse .sv-status { animation:svStatusPop 420ms cubic-bezier(.2,1.3,.35,1); }
-    .sv-foot {
-      font-size:.115em; font-weight:800; letter-spacing:.34em; text-indent:.34em;
-      color:var(--acc); opacity:.55; margin-top:.30em;
-    }
-    .sv-hud.no-footer .sv-foot { display:none; }
-    @keyframes svLowPulse { 0%,100%{filter:none} 50%{filter:brightness(1.25) drop-shadow(0 0 .5em currentColor)} }
-    .sv-hud.low-pulse { animation:svLowPulse 1.1s ease-in-out infinite; }
+    @keyframes pfEmojiMoodPop { 0%{opacity:0;transform:scale(.28) rotate(-12deg)} 42%{opacity:1;transform:scale(1.24) rotate(5deg)} 68%{transform:scale(.94) rotate(-2deg)} 100%{opacity:1;transform:scale(1) rotate(0)} }
+    .pf-survival-status-wrap.emoji-pop .pf-survival-emoji { animation:pfEmojiMoodPop 510ms cubic-bezier(.2,1.25,.35,1); }
+    @keyframes pfImpactShake { 0%,100%{transform:translate(-50%,-50%)} 20%{transform:translate(calc(-50% - 4px),-50%)} 45%{transform:translate(calc(-50% + 3px),-50%)} 70%{transform:translate(calc(-50% - 2px),-50%)} }
+    .pf-survival.impact-shake { animation:pfImpactShake 390ms ease-out; }
+    @keyframes pfLowPulse { 0%,100%{filter:drop-shadow(0 4px 10px rgba(0,0,0,.72))} 50%{filter:drop-shadow(0 4px 14px currentColor) brightness(1.12)} }
+    .pf-survival.low-pulse:not(.impact-shake) { animation:pfLowPulse 1.15s ease-in-out infinite; }
+    .pf-anim-off .pf-survival.pulse .pf-survival-value,
+    .pf-anim-off .pf-survival-delta { animation:none!important; }
 
-    .sv-mini {
-      position:absolute; right:16px; top:16px; width:26px; height:26px; border-radius:50%;
-      background:rgba(6,10,16,.75); border:1px solid var(--acc-soft); color:var(--acc);
-      pointer-events:auto; z-index:9; display:flex; align-items:center; justify-content:center;
-      font-size:13px; cursor:pointer;
-    }
-
-    /* ============ PANELI (opsionet) — CYBER ============ */
-    .sv-panel {
-      position:absolute; width:640px; max-height:78vh; overflow:auto;
-      background:rgba(6,10,16,.96);
-      border:1px solid var(--acc-soft); border-radius:10px;
-      box-shadow:0 24px 70px rgba(0,0,0,.6), inset 0 0 40px rgba(0,229,255,.03);
-      pointer-events:auto; z-index:10;
-      font-family:'Futura Extra Bold','Segoe UI',Arial,sans-serif;
-      color:#e6f7fb;
-    }
-    .sv-panel::-webkit-scrollbar { width:10px; }
-    .sv-panel::-webkit-scrollbar-thumb { background:rgba(0,229,255,.25); border-radius:10px; }
-    .sv-head { padding:14px 18px 10px; border-bottom:1px solid rgba(0,229,255,.18); display:flex; justify-content:space-between; align-items:center; }
-    .sv-title { font-size:22px; font-weight:900; letter-spacing:.02em; text-shadow:0 0 18px rgba(0,229,255,.35); }
-    .sv-tag { font-size:10px; letter-spacing:.3em; color:rgba(140,220,235,.8); margin-top:3px; }
-    .sv-x { width:34px; height:34px; border-radius:8px; background:rgba(255,255,255,.07); border:1px solid rgba(0,229,255,.25); color:#e6f7fb; font-size:18px; cursor:pointer; }
-    .sv-tabs { display:flex; gap:6px; padding:10px 14px 0; flex-wrap:wrap; }
-    .sv-tab {
-      padding:8px 14px; border-radius:8px; border:1px solid rgba(0,229,255,.25);
-      background:transparent; color:rgba(160,215,228,.8); font-size:11px; font-weight:800;
-      letter-spacing:.18em; cursor:pointer; font-family:inherit;
-    }
-    .sv-tab:hover { color:#e6f7fb; border-color:rgba(0,229,255,.6); }
-    .sv-tab.active { background:rgba(0,229,255,.16); color:#fff; border-color:rgba(0,229,255,.9); box-shadow:0 0 14px rgba(0,229,255,.25) inset; }
-    .sv-body { padding:14px 16px 18px; }
-    .sv-card {
-      background:rgba(11,19,28,.85); border:1px solid rgba(0,229,255,.22); border-radius:8px;
-      padding:12px 14px; margin-bottom:12px;
-    }
-    .sv-card-title { font-size:10px; font-weight:800; letter-spacing:.32em; color:rgba(140,220,235,.85); margin-bottom:10px; }
-    .sv-row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:8px; }
-    .sv-grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-    .sv-lbl { font-size:13px; font-weight:800; }
-    .sv-mini-lbl { font-size:11px; color:rgba(200,240,248,.75); }
-    .sv-val { margin-left:auto; font-size:12px; color:#fff; font-weight:800; }
-    .sv-input, .sv-select {
-      background:rgba(0,229,255,.05); border:1px solid rgba(0,229,255,.3); border-radius:6px;
-      color:#fff; padding:8px 10px; font-size:13px; outline:none; width:100%; box-sizing:border-box;
-      font-family:inherit;
-    }
-    .sv-input:focus, .sv-select:focus { border-color:rgba(0,229,255,.8); }
-    .sv-select option { background:#0a121a; }
-    .sv-range { width:100%; accent-color:#00e5ff; }
-    .sv-btn {
-      border:1px solid rgba(0,229,255,.35); border-radius:8px; background:rgba(0,229,255,.08);
-      color:#dff6fb; padding:9px 14px; font-size:12px; font-weight:800; letter-spacing:.08em;
-      cursor:pointer; font-family:inherit;
-    }
-    .sv-btn:hover { background:rgba(0,229,255,.16); }
-    .sv-btn.active { background:rgba(0,229,255,.22); border-color:rgba(0,229,255,.95); color:#fff; }
-    .sv-btn.on { background:rgba(66,255,104,.18); border-color:rgba(66,255,104,.8); color:#b9ffd0; }
-    .sv-btn.warn { background:rgba(255,138,30,.14); border-color:rgba(255,138,30,.7); color:#ffd9ae; }
-    .sv-btn.danger { background:rgba(255,51,77,.14); border-color:rgba(255,51,77,.7); color:#ffc2cc; }
-    .sv-toggle { display:flex; align-items:center; gap:8px; font-size:12.5px; color:rgba(225,247,251,.9); cursor:pointer; }
-    .sv-sw { position:relative; width:42px; height:22px; flex:none; border-radius:99px; background:rgba(255,255,255,.12); border:1px solid rgba(0,229,255,.3); transition:background .15s; }
-    .sv-sw:after { content:""; position:absolute; left:2px; top:2px; width:16px; height:16px; border-radius:50%; background:#8fd8e6; transition:left .15s, background .15s; }
-    .sv-toggle input { display:none; }
-    .sv-toggle input:checked + .sv-sw { background:rgba(0,229,255,.55); }
-    .sv-toggle input:checked + .sv-sw:after { left:22px; background:#fff; }
-    .sv-colorrow { display:flex; align-items:center; gap:6px; position:relative; }
-    .sv-swatch { width:30px; height:26px; flex:none; border:1px solid rgba(255,255,255,.3); border-radius:6px; cursor:pointer; }
-    .sv-swatch.open { border-color:#fff; box-shadow:0 0 0 2px rgba(0,229,255,.4); }
-    .sv-pop {
-      position:absolute; z-index:60; margin-top:6px; left:0;
-      background:#0a141c; border:1px solid rgba(0,229,255,.4); border-radius:8px; padding:8px;
-      width:212px; box-shadow:0 12px 34px rgba(0,0,0,.7);
-    }
-    .sv-pop-grid { display:grid; grid-template-columns:repeat(8,1fr); gap:4px; }
-    .sv-pop-sw { width:100%; padding-top:100%; border-radius:4px; cursor:pointer; border:1px solid rgba(255,255,255,.15); }
-    .sv-pop-sw:hover { transform:scale(1.15); border-color:#fff; }
-    .sv-note { font-size:10.5px; color:rgba(160,215,228,.7); line-height:1.45; margin-top:6px; }
-    .sv-preset { display:flex; align-items:center; gap:8px; background:rgba(0,229,255,.05); border:1px solid rgba(0,229,255,.18); border-radius:6px; padding:6px 10px; margin-top:6px; }
-    .sv-preset-name { flex:1; font-size:12px; font-weight:800; }
-    .sv-kbd { font-size:10px; padding:2px 7px; border-radius:4px; background:rgba(0,229,255,.1); border:1px solid rgba(0,229,255,.3); color:#9fe8f5; letter-spacing:.1em; }
   </style>
 
-  <!-- ============ HUD NË EKRAN ============ -->
-  <div class="sv-hud" ng-if="hudVisible()" ng-class="hudClass()" ng-style="hudStyle()"
-       ng-mousedown="startDrag($event)">
-    <b class="sv-c sv-c1"></b><b class="sv-c sv-c2"></b><b class="sv-c sv-c3"></b><b class="sv-c sv-c4"></b>
-    <div class="sv-scan"></div>
-    <div class="sv-label" ng-if="cfg.labelOn" ng-style="labelStyle()">{{cfg.labelText}}</div>
-    <div class="sv-main">
-      <span class="sv-num" ng-style="numStyle()">
-        <span class="sv-ghost g-r" aria-hidden="true">{{numText()}}</span>
-        <span class="sv-ghost g-c" aria-hidden="true">{{numText()}}</span>
-        <span class="sv-num-front">{{numText()}}</span><i ng-if="cfg.showPercent">%</i>
+  <!-- ===== HUD NË EKRAN (identik me v5.1 — mos e prek) ===== -->
+<!-- v4.3: movable Survival Chance overlay -->
+  <div class="pf-survival" ng-if="survivalVisible()"
+       ng-class="survivalClass()" ng-style="survivalStyle()"
+       ng-mousedown="startSurvivalDrag($event)">
+    <div class="pf-survival-main">
+      <span class="pf-survival-label" ng-if="cfg.survivalShowLabel" ng-style="survivalLabelStyle()">{{cfg.survivalLabelText}}</span>
+      <span class="pf-survival-counter">
+        <span class="pf-survival-old" ng-if="survival.rolling" ng-style="survivalOldStyle()">{{formatSurvivalValue(survival.oldValue)}}<i ng-if="cfg.survivalShowPercent">%</i></span>
+        <span class="pf-survival-value" ng-style="survivalValueStyle()">{{survivalValue()}}<i ng-if="cfg.survivalShowPercent">%</i></span>
+        <span class="pf-survival-delta" ng-if="survival.deltaVisible" ng-style="survivalDeltaStyle(1,1)">{{survival.deltaText}}</span>
+        <span class="pf-survival-delta pf-delta-ghost ghost-one" ng-if="survival.deltaVisible && cfg.survivalDeltaGhosts" ng-style="survivalDeltaStyle(.34,.86)">{{survival.deltaText}}</span>
+        <span class="pf-survival-delta pf-delta-ghost ghost-two" ng-if="survival.deltaVisible && cfg.survivalDeltaGhosts" ng-style="survivalDeltaStyle(.16,.72)">{{survival.deltaText}}</span>
       </span>
-      <span class="sv-delta" ng-if="st.deltaVisible" ng-style="deltaStyle()">{{st.deltaText}}</span>
     </div>
-    <div class="sv-status-wrap" ng-if="cfg.emojiOn || cfg.statusOn" ng-class="statusWrapClass()">
-      <span class="sv-emoji" ng-if="cfg.emojiOn" ng-style="emojiStyle()">{{emojiText()}}</span>
-      <span class="sv-status" ng-if="cfg.statusOn" ng-style="statusStyle()">{{statusText()}}</span>
+    <div class="pf-survival-status-wrap" ng-if="cfg.survivalShowStatus || cfg.survivalEmojiOn"
+         ng-class="survivalEmojiClass()">
+      <span class="pf-survival-emoji" ng-if="cfg.survivalEmojiOn"
+            ng-style="survivalEmojiStyle()">{{survivalEmojiText()}}</span>
+      <div class="pf-survival-status" ng-if="cfg.survivalShowStatus || cfg.survivalEmojiOn"
+           ng-style="survivalStatusStyle()">{{survivalStatus()}}</div>
     </div>
-    <div class="sv-foot" ng-if="cfg.footerOn">{{cfg.footerText}}</div>
+    <div class="pf-survival-meter" ng-if="cfg.survivalShowMeter"><div ng-style="survivalMeterStyle()"></div></div>
   </div>
 
-  <button class="sv-mini" ng-if="!cfg.showPanel && cfg.miniButton" ng-click="openPanel()" title="SURVIVAL HUD opsionet">⚙</button>
+  <!-- v5.1: vehiclesOn === false e fsheh rreshtin e rrumbullakëve — mbetet vetëm Survival Chance.
+       Motori i dëmit/survival vazhdon të punojë në background (të dhënat vijnë nga Lua). -->
 
-  <!-- ============ PANELI I OPSIONEVE ============ -->
-  <div class="sv-panel" ng-if="cfg.showPanel" ng-style="panelStyle()">
+  <button class="sv-mini" ng-if="!cfg.survivalShowPanel && cfg.miniButton" ng-click="openPanel()" title="SURVIVAL HUD opsionet">⚙</button>
+
+  <!-- ===== PANELI I OPSIONEVE (look i re v1.1) ===== -->
+  <div class="sv-panel" ng-if="cfg.survivalShowPanel" ng-style="panelStyle()">
     <div class="sv-head">
       <div>
         <div class="sv-title">SURVIVAL HUD</div>
-        <div class="sv-tag">// CONFIG · CYBER · v1.0</div>
+        <div class="sv-tag">OPSIONET · v1.1</div>
       </div>
       <div class="sv-row" style="margin:0;">
-        <label class="sv-toggle"><input type="checkbox" ng-model="cfg.on" ng-change="persist()"><span class="sv-sw"></span> ON</label>
+        <label class="sv-toggle"><input type="checkbox" ng-model="cfg.survivalOn" ng-change="persist()"><span class="sv-sw"></span> ON</label>
         <button class="sv-x" ng-click="closePanel()">×</button>
       </div>
     </div>
@@ -265,281 +209,320 @@
     </div>
 
     <div class="sv-body">
-      <!-- ===== PAMJA ===== -->
+      <!-- PAMJA -->
       <div ng-show="tab==='pamja'">
         <div class="sv-card">
           <div class="sv-card-title">GJENDJA</div>
           <div class="sv-row" style="margin-top:0;">
-            <button class="sv-btn" ng-class="{on: cfg.on}" ng-click="toggleHud()">HUD: {{cfg.on ? 'ON' : 'OFF'}}</button>
-            <button class="sv-btn" ng-class="{active: cfg.editPosition}" ng-click="toggleEdit()">Edit pozicionin {{cfg.editPosition ? '●' : ''}}</button>
-            <button class="sv-btn warn" ng-click="resetRun()">↺ RESET RUN</button>
+            <button class="sv-btn" ng-class="{on: cfg.survivalOn}" ng-click="toggleHud()">HUD: {{cfg.survivalOn ? 'ON' : 'OFF'}}</button>
+            <button class="sv-btn" ng-class="{active: cfg.survivalEditPosition}" ng-click="toggleEdit()">Edit pozicionin</button>
+            <button class="sv-btn danger" ng-click="resetRun()">↺ RESET RUN</button>
           </div>
           <div class="sv-note">Tastet: <span class="sv-kbd">{{cfg.toggleKey|uppercase}}</span> ON/OFF · <span class="sv-kbd">{{cfg.resetKey|uppercase}}</span> reset run · <span class="sv-kbd">{{cfg.panelKey|uppercase}}</span> paneli. Me «Edit pozicionin» e tërheq HUD-in me maus.</div>
         </div>
 
         <div class="sv-card">
-          <div class="sv-card-title">POZICIONI & MADHËSIA</div>
-          <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Pozita X</span><span class="sv-val">{{cfg.posX|number:1}}%</span></div>
-          <input class="sv-range" type="range" min="0" max="100" step="0.5" ng-model="cfg.posX" ng-change="persist()">
-          <div class="sv-row"><span class="sv-mini-lbl">Pozita Y</span><span class="sv-val">{{cfg.posY|number:1}}%</span></div>
-          <input class="sv-range" type="range" min="0" max="100" step="0.5" ng-model="cfg.posY" ng-change="persist()">
-          <div class="sv-row"><span class="sv-mini-lbl">Madhësia</span><span class="sv-val">{{cfg.size}} px</span></div>
-          <input class="sv-range" type="range" min="30" max="130" step="1" ng-model="cfg.size" ng-change="persist()">
+          <div class="sv-card-title">POZICIONI &amp; MADHËSIA</div>
+          <div class="sv-grid2">
+            <div>
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Pozita X</span><span class="sv-val">{{cfg.survivalPosX|number:1}}%</span></div>
+              <input class="sv-range" type="range" min="0" max="100" step="0.5" ng-model="cfg.survivalPosX" ng-change="persist()">
+            </div>
+            <div>
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Pozita Y</span><span class="sv-val">{{cfg.survivalPosY|number:1}}%</span></div>
+              <input class="sv-range" type="range" min="0" max="100" step="0.5" ng-model="cfg.survivalPosY" ng-change="persist()">
+            </div>
+            <div>
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Madhësia</span><span class="sv-val">{{cfg.survivalSize}} px</span></div>
+              <input class="sv-range" type="range" min="28" max="110" step="1" ng-model="cfg.survivalSize" ng-change="persist()">
+            </div>
+            <div>
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Decimalet</span></div>
+              <div class="sv-row" style="margin-top:6px;">
+                <button class="sv-btn" ng-class="{active:cfg.survivalDecimals===0}" ng-click="cfg.survivalDecimals=0;persist()">0</button>
+                <button class="sv-btn" ng-class="{active:cfg.survivalDecimals===1}" ng-click="cfg.survivalDecimals=1;persist()">1</button>
+                <label class="sv-toggle" style="margin-left:auto;"><input type="checkbox" ng-model="cfg.survivalShowPercent" ng-change="persist()"><span class="sv-sw"></span> %</label>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="sv-card">
           <div class="sv-card-title">TEKSTI</div>
           <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Titulli</span></div>
-          <input class="sv-input" type="text" ng-model="cfg.labelText" ng-change="persist()" maxlength="30">
+          <input class="sv-input" type="text" ng-model="cfg.survivalLabelText" ng-change="persist()" maxlength="28">
+          <div class="sv-row">
+            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.survivalShowLabel" ng-change="persist()"><span class="sv-sw"></span> Titulli</label>
+            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.survivalShowStatus" ng-change="persist()"><span class="sv-sw"></span> Statusi (SAFE/DANGER)</label>
+            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.survivalShowMeter" ng-change="persist()"><span class="sv-sw"></span> Mini meter</label>
+            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.survivalEmojiOn" ng-change="persist()"><span class="sv-sw"></span> Emoji</label>
+          </div>
           <div class="sv-grid2" style="margin-top:10px;">
             <div>
-              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Madhësia e titullit</span><span class="sv-val">{{cfg.labelScale|number:2}}</span></div>
-              <input class="sv-range" type="range" min="0.15" max="0.6" step="0.01" ng-model="cfg.labelScale" ng-change="persist()">
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Madhësia e titullit</span><span class="sv-val">{{cfg.survivalLabelScale|number:2}}</span></div>
+              <input class="sv-range" type="range" min="0.3" max="1" step="0.05" ng-model="cfg.survivalLabelScale" ng-change="persist()">
             </div>
             <div>
-              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Hapësira e shkronjave</span><span class="sv-val">{{cfg.labelTracking|number:2}} em</span></div>
-              <input class="sv-range" type="range" min="0.05" max="0.7" step="0.01" ng-model="cfg.labelTracking" ng-change="persist()">
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Madhësia e statusit</span><span class="sv-val">{{(cfg.survivalStatusSize*100)|number:0}}%</span></div>
+              <input class="sv-range" type="range" min="0.12" max="0.80" step="0.02" ng-model="cfg.survivalStatusSize" ng-change="persist()">
             </div>
             <div>
-              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Decimalet</span></div>
-              <div class="sv-row">
-                <button class="sv-btn" ng-class="{active:cfg.decimals===0}" ng-click="cfg.decimals=0;persist()">0</button>
-                <button class="sv-btn" ng-class="{active:cfg.decimals===1}" ng-click="cfg.decimals=1;persist()">1</button>
-                <label class="sv-toggle" style="margin-left:auto;"><input type="checkbox" ng-model="cfg.showPercent" ng-change="persist()"><span class="sv-sw"></span> %</label>
-              </div>
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Hapësira e statusit</span><span class="sv-val">{{cfg.survivalStatusSpacing|number:2}} em</span></div>
+              <input class="sv-range" type="range" min="0" max="0.45" step="0.01" ng-model="cfg.survivalStatusSpacing" ng-change="persist()">
             </div>
             <div>
-              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Rreshti i poshtëm</span></div>
-              <input class="sv-input" type="text" ng-model="cfg.footerText" ng-change="persist()" maxlength="34">
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Madhësia e emoji</span><span class="sv-val">{{(cfg.survivalEmojiSize*100)|number:0}}%</span></div>
+              <input class="sv-range" type="range" min="0.14" max="1.10" step="0.02" ng-model="cfg.survivalEmojiSize" ng-change="persist()">
             </div>
-          </div>
-          <div class="sv-row">
-            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.labelOn" ng-change="persist()"><span class="sv-sw"></span> Titulli</label>
-            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.footerOn" ng-change="persist()"><span class="sv-sw"></span> Rreshti i poshtëm</label>
-            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.statusOn" ng-change="persist()"><span class="sv-sw"></span> Statusi (SAFE/DANGER)</label>
-            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.emojiOn" ng-change="persist()"><span class="sv-sw"></span> Emoji</label>
           </div>
         </div>
 
         <div class="sv-card">
-          <div class="sv-card-title">STATUSI & EMOJI</div>
+          <div class="sv-card-title">LAYOUT &amp; BACKGROUND</div>
+          <div class="sv-row" style="margin-top:0;">
+            <button class="sv-btn" ng-class="{active:cfg.survivalLayout==='inline'}" ng-click="cfg.survivalLayout='inline';persist()">Inline</button>
+            <button class="sv-btn" ng-class="{active:cfg.survivalLayout==='stacked'}" ng-click="cfg.survivalLayout='stacked';persist()">Stacked</button>
+            <button class="sv-btn" ng-class="{active:cfg.survivalLayout==='compact'}" ng-click="cfg.survivalLayout='compact';persist()">Compact</button>
+          </div>
+          <div class="sv-row">
+            <span class="sv-mini-lbl">Background</span>
+            <button class="sv-btn" ng-class="{active:cfg.survivalBackground==='none'}" ng-click="cfg.survivalBackground='none';persist()">None</button>
+            <button class="sv-btn" ng-class="{active:cfg.survivalBackground==='pill'}" ng-click="cfg.survivalBackground='pill';persist()">Pill</button>
+            <button class="sv-btn" ng-class="{active:cfg.survivalBackground==='card'}" ng-click="cfg.survivalBackground='card';persist()">Card</button>
+          </div>
+          <div class="sv-grid2" style="margin-top:10px;">
+            <div>
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Bg color</span></div>
+              <div class="sv-colorrow">
+                <div class="sv-swatch" ng-style="{background:cfg.survivalBackgroundColor}"></div>
+                <input class="sv-input" type="text" ng-model="cfg.survivalBackgroundColor__raw" ng-change="setColorField('survivalBackgroundColor')" maxlength="7">
+              </div>
+            </div>
+            <div>
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Bg opacity</span><span class="sv-val">{{(cfg.survivalBackgroundOpacity*100)|number:0}}%</span></div>
+              <input class="sv-range" type="range" min="0" max="0.95" step="0.05" ng-model="cfg.survivalBackgroundOpacity" ng-change="persist()">
+            </div>
+          </div>
+        </div>
+
+        <div class="sv-card">
+          <div class="sv-card-title">STATUSI &amp; EMOJI</div>
           <div class="sv-grid2">
             <div>
-              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Madhësia e statusit</span><span class="sv-val">{{(cfg.statusSize*100)|number:0}}%</span></div>
-              <input class="sv-range" type="range" min="0.12" max="0.60" step="0.02" ng-model="cfg.statusSize" ng-change="persist()">
-            </div>
-            <div>
-              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Hapësira e shkronjave</span><span class="sv-val">{{cfg.statusSpacing|number:2}} em</span></div>
-              <input class="sv-range" type="range" min="0" max="0.5" step="0.02" ng-model="cfg.statusSpacing" ng-change="persist()">
-            </div>
-            <div>
-              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Madhësia e emoji</span><span class="sv-val">{{(cfg.emojiSize*100)|number:0}}%</span></div>
-              <input class="sv-range" type="range" min="0.15" max="1.0" step="0.02" ng-model="cfg.emojiSize" ng-change="persist()">
-            </div>
-            <div>
               <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Pozicioni i statusit</span></div>
-              <select class="sv-select" ng-model="cfg.statusPosition" ng-change="persist()">
-                <option value="bottom">Poshtë numrit</option>
-                <option value="top">Lart numrit</option>
+              <select class="sv-select" ng-model="cfg.survivalStatusPosition" ng-change="persist()">
+                <option value="bottom">Poshtë</option><option value="top">Lart</option>
+              </select>
+            </div>
+            <div>
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Emoji mode</span></div>
+              <select class="sv-select" ng-model="cfg.survivalEmojiMode" ng-change="persist()">
+                <option value="right">SAFE 😎</option><option value="left">😎 SAFE</option>
               </select>
             </div>
           </div>
           <div class="sv-row">
-            <div>
-              <span class="sv-mini-lbl">Emoji mode</span>
-              <select class="sv-select" ng-model="cfg.emojiMode" ng-change="persist()">
-                <option value="right">SAFE 😎</option>
-                <option value="left">😎 SAFE</option>
-              </select>
-            </div>
-            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.statusPulse" ng-change="persist()"><span class="sv-sw"></span> Pulse i statusit</label>
-            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.emojiPop" ng-change="persist()"><span class="sv-sw"></span> Pop i emoji</label>
+            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.survivalStatusPulse" ng-change="persist()"><span class="sv-sw"></span> Pulse i statusit</label>
+            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.survivalEmojiPop" ng-change="persist()"><span class="sv-sw"></span> Pop i emoji</label>
           </div>
         </div>
       </div>
 
-      <!-- ===== NGJYRAT ===== -->
+      <!-- NGJYRAT -->
       <div ng-show="tab==='ngjyrat'">
-        <div class="sv-card">
-          <div class="sv-card-title">AKCENTI (këndet, korniza, titulli)</div>
-          <div class="sv-colorrow">
-            <div class="sv-swatch" ng-class="{open:isPickerOpen('accentColor')}" ng-style="{background:cfg.accentColor}" ng-click="togglePicker('accentColor',$event)"></div>
-            <input class="sv-input" type="text" ng-model="cfg.accentColor__raw" ng-change="setColorField('accentColor')" maxlength="7">
-            <div class="sv-pop" ng-if="isPickerOpen('accentColor')" ng-click="$event.stopPropagation()">
-              <div class="sv-pop-grid"><div class="sv-pop-sw" ng-repeat="c in palette" ng-style="{background:c}" ng-click="pickColor('accentColor',c)"></div></div>
-            </div>
-          </div>
-          <div class="sv-note">Kjo është ngjyra kryesore CYBER e gjithë HUD-it.</div>
-        </div>
         <div class="sv-card">
           <div class="sv-card-title">NGJYRAT E TEKSTIT</div>
           <div class="sv-grid2">
             <div>
-              <div class="sv-mini-lbl">Numri</div>
+              <div class="sv-mini-lbl">Titulli</div>
               <div class="sv-colorrow">
-                <div class="sv-swatch" ng-class="{open:isPickerOpen('valueColor')}" ng-style="{background:cfg.valueColor}" ng-click="togglePicker('valueColor',$event)"></div>
-                <input class="sv-input" type="text" ng-model="cfg.valueColor__raw" ng-change="setColorField('valueColor')" maxlength="7">
-                <div class="sv-pop" ng-if="isPickerOpen('valueColor')" ng-click="$event.stopPropagation()">
-                  <div class="sv-pop-grid"><div class="sv-pop-sw" ng-repeat="c in palette" ng-style="{background:c}" ng-click="pickColor('valueColor',c)"></div></div>
+                <div class="sv-swatch" ng-class="{open:isPickerOpen('survivalLabelColor')}" ng-style="{background:cfg.survivalLabelColor}" ng-click="togglePicker('survivalLabelColor',$event)"></div>
+                <input class="sv-input" type="text" ng-model="cfg.survivalLabelColor__raw" ng-change="setColorField('survivalLabelColor')" maxlength="7">
+                <div class="sv-pop" ng-if="isPickerOpen('survivalLabelColor')" ng-click="$event.stopPropagation()">
+                  <div class="sv-pop-grid"><div class="sv-pop-sw" ng-repeat="c in palette" ng-style="{background:c}" ng-click="pickColor('survivalLabelColor',c)"></div></div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="sv-mini-lbl">Përqindja</div>
+              <div class="sv-colorrow">
+                <div class="sv-swatch" ng-class="{open:isPickerOpen('survivalValueColor')}" ng-style="{background:cfg.survivalValueColor}" ng-click="togglePicker('survivalValueColor',$event)"></div>
+                <input class="sv-input" type="text" ng-model="cfg.survivalValueColor__raw" ng-change="setColorField('survivalValueColor')" maxlength="7">
+                <div class="sv-pop" ng-if="isPickerOpen('survivalValueColor')" ng-click="$event.stopPropagation()">
+                  <div class="sv-pop-grid"><div class="sv-pop-sw" ng-repeat="c in palette" ng-style="{background:c}" ng-click="pickColor('survivalValueColor',c)"></div></div>
                 </div>
               </div>
             </div>
             <div>
               <div class="sv-mini-lbl">Mini ndryshimi (-X%)</div>
               <div class="sv-colorrow">
-                <div class="sv-swatch" ng-class="{open:isPickerOpen('deltaColor')}" ng-style="{background:cfg.deltaColor}" ng-click="togglePicker('deltaColor',$event)"></div>
-                <input class="sv-input" type="text" ng-model="cfg.deltaColor__raw" ng-change="setColorField('deltaColor')" maxlength="7">
-                <div class="sv-pop" ng-if="isPickerOpen('deltaColor')" ng-click="$event.stopPropagation()">
-                  <div class="sv-pop-grid"><div class="sv-pop-sw" ng-repeat="c in palette" ng-style="{background:c}" ng-click="pickColor('deltaColor',c)"></div></div>
+                <div class="sv-swatch" ng-class="{open:isPickerOpen('survivalDeltaColor')}" ng-style="{background:cfg.survivalDeltaColor}" ng-click="togglePicker('survivalDeltaColor',$event)"></div>
+                <input class="sv-input" type="text" ng-model="cfg.survivalDeltaColor__raw" ng-change="setColorField('survivalDeltaColor')" maxlength="7">
+                <div class="sv-pop" ng-if="isPickerOpen('survivalDeltaColor')" ng-click="$event.stopPropagation()">
+                  <div class="sv-pop-grid"><div class="sv-pop-sw" ng-repeat="c in palette" ng-style="{background:c}" ng-click="pickColor('survivalDeltaColor',c)"></div></div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="sv-row">
-            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.dynamicColor" ng-change="persist()"><span class="sv-sw"></span> Ngjyra dinamike në rrezik</label>
+            <div>
+              <div class="sv-mini-lbl">Opsione</div>
+              <label class="sv-toggle" style="margin-top:8px;"><input type="checkbox" ng-model="cfg.survivalDynamicColor" ng-change="persist()"><span class="sv-sw"></span> Ngjyra dinamike në rrezik</label>
+            </div>
           </div>
         </div>
         <div class="sv-card">
           <div class="sv-card-title">DYNAMIC RISK COLORS</div>
           <div class="sv-grid2">
             <div>
-              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Warning ≤ {{cfg.warningThreshold}}%</span></div>
-              <input class="sv-range" type="range" min="20" max="90" step="1" ng-model="cfg.warningThreshold" ng-change="persist()">
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Warning ≤ {{cfg.survivalWarningThreshold}}%</span></div>
+              <input class="sv-range" type="range" min="20" max="90" step="1" ng-model="cfg.survivalWarningThreshold" ng-change="persist()">
               <div class="sv-colorrow">
-                <div class="sv-swatch" ng-style="{background:cfg.warningColor}"></div>
-                <input class="sv-input" type="text" ng-model="cfg.warningColor__raw" ng-change="setColorField('warningColor')" maxlength="7">
+                <div class="sv-swatch" ng-style="{background:cfg.survivalWarningColor}"></div>
+                <input class="sv-input" type="text" ng-model="cfg.survivalWarningColor__raw" ng-change="setColorField('survivalWarningColor')" maxlength="7">
               </div>
             </div>
             <div>
-              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Critical ≤ {{cfg.criticalThreshold}}%</span></div>
-              <input class="sv-range" type="range" min="1" max="50" step="1" ng-model="cfg.criticalThreshold" ng-change="persist()">
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Critical ≤ {{cfg.survivalCriticalThreshold}}%</span></div>
+              <input class="sv-range" type="range" min="1" max="50" step="1" ng-model="cfg.survivalCriticalThreshold" ng-change="persist()">
               <div class="sv-colorrow">
-                <div class="sv-swatch" ng-style="{background:cfg.criticalColor}"></div>
-                <input class="sv-input" type="text" ng-model="cfg.criticalColor__raw" ng-change="setColorField('criticalColor')" maxlength="7">
+                <div class="sv-swatch" ng-style="{background:cfg.survivalCriticalColor}"></div>
+                <input class="sv-input" type="text" ng-model="cfg.survivalCriticalColor__raw" ng-change="setColorField('survivalCriticalColor')" maxlength="7">
               </div>
             </div>
           </div>
+          <div class="sv-note">Ngjyra dinamike: jeshile → portokalli (Warning) → kuqe (Critical), siç ishte në v5.1.</div>
         </div>
       </div>
 
-      <!-- ===== EFEKTET ===== -->
+      <!-- EFEKTET -->
       <div ng-show="tab==='efektet'">
         <div class="sv-card">
-          <div class="sv-card-title">CYBER EFEKTET</div>
-          <div class="sv-row" style="margin-top:0;">
-            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.brackets" ng-change="persist()"><span class="sv-sw"></span> Këndet [ ]</label>
-            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.scanlines" ng-change="persist()"><span class="sv-sw"></span> Scanlines</label>
+          <div class="sv-card-title">Drita &amp; Vija</div>
+          <div class="sv-grid2">
+            <div>
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Glow i numrit</span><span class="sv-val">{{cfg.survivalGlow}} px</span></div>
+              <input class="sv-range" type="range" min="0" max="30" step="1" ng-model="cfg.survivalGlow" ng-change="persist()">
+            </div>
+            <div>
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Outline i numrit</span><span class="sv-val">{{cfg.survivalOutline|number:1}} px</span></div>
+              <input class="sv-range" type="range" min="0" max="3" step="0.25" ng-model="cfg.survivalOutline" ng-change="persist()">
+            </div>
+            <div>
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Font weight</span></div>
+              <select class="sv-select" ng-model="cfg.survivalFontWeight" ng-change="persist()">
+                <option value="700">700</option><option value="800">800</option><option value="900">900</option>
+              </select>
+            </div>
+            <div>
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Stili</span></div>
+              <label class="sv-toggle" style="margin-top:6px;"><input type="checkbox" ng-model="cfg.survivalItalic" ng-change="persist()"><span class="sv-sw"></span> Italic</label>
+            </div>
           </div>
-          <div class="sv-row">
-            <span class="sv-mini-lbl">Intensiteti i glitch</span>
-            <button class="sv-btn" ng-class="{active:cfg.glitch===0}" ng-click="cfg.glitch=0;persist()">OFF</button>
-            <button class="sv-btn" ng-class="{active:cfg.glitch===1}" ng-click="cfg.glitch=1;persist()">1</button>
-            <button class="sv-btn" ng-class="{active:cfg.glitch===2}" ng-click="cfg.glitch=2;persist()">2</button>
-            <button class="sv-btn" ng-class="{active:cfg.glitch===3}" ng-click="cfg.glitch=3;persist()">3</button>
-          </div>
-          <div class="sv-note">Glitch = shpërthimi kuq/cyan i numrit kur merr goditje (niveli 2-3 shton dridhje të lehtë të vazhdueshme).</div>
-        </div>
-        <div class="sv-card">
-          <div class="sv-card-title">Drita & Vija</div>
-          <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Glow i numrit</span><span class="sv-val">{{cfg.glow}} px</span></div>
-          <input class="sv-range" type="range" min="0" max="40" step="1" ng-model="cfg.glow" ng-change="persist()">
-          <div class="sv-row"><span class="sv-mini-lbl">Outline i numrit</span><span class="sv-val">{{cfg.outline|number:1}} px</span></div>
-          <input class="sv-range" type="range" min="0" max="3" step="0.25" ng-model="cfg.outline" ng-change="persist()">
         </div>
         <div class="sv-card">
           <div class="sv-card-title">MINI NDRYSHIMI (-X%)</div>
           <div class="sv-row" style="margin-top:0;">
-            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.showDelta" ng-change="persist()"><span class="sv-sw"></span> Shfaq -X%</label>
+            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.survivalShowDelta" ng-change="persist()"><span class="sv-sw"></span> Shfaq -X%</label>
+            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.survivalDeltaGhosts" ng-change="persist()"><span class="sv-sw"></span> Ghost trail</label>
           </div>
-          <div class="sv-grid2">
+          <div class="sv-grid2" style="margin-top:10px;">
             <div>
-              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Kohëzgjatja</span><span class="sv-val">{{cfg.deltaDuration}} ms</span></div>
-              <input class="sv-range" type="range" min="300" max="2000" step="50" ng-model="cfg.deltaDuration" ng-change="persist()">
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Kohëzgjatja</span><span class="sv-val">{{cfg.survivalDeltaDuration}} ms</span></div>
+              <input class="sv-range" type="range" min="300" max="2000" step="50" ng-model="cfg.survivalDeltaDuration" ng-change="persist()">
             </div>
             <div>
-              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Minimumi</span><span class="sv-val">{{cfg.deltaMin|number:1}}%</span></div>
-              <input class="sv-range" type="range" min="0.1" max="10" step="0.1" ng-model="cfg.deltaMin" ng-change="persist()">
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Minimum drop</span><span class="sv-val">{{cfg.survivalDeltaMin|number:1}}%</span></div>
+              <input class="sv-range" type="range" min="0.1" max="10" step="0.1" ng-model="cfg.survivalDeltaMin" ng-change="persist()">
             </div>
             <div>
               <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Pozicioni</span></div>
-              <select class="sv-select" ng-model="cfg.deltaPosition" ng-change="persist()">
+              <select class="sv-select" ng-model="cfg.survivalDeltaPosition" ng-change="persist()">
                 <option value="right">Anas</option><option value="top">Lart</option><option value="bottom">Poshtë</option>
               </select>
             </div>
             <div>
-              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Madhësia</span><span class="sv-val">{{(cfg.deltaSize*100)|number:0}}%</span></div>
-              <input class="sv-range" type="range" min="0.2" max="1.0" step="0.02" ng-model="cfg.deltaSize" ng-change="persist()">
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Madhësia</span><span class="sv-val">{{(cfg.survivalDeltaSize*100)|number:0}}%</span></div>
+              <input class="sv-range" type="range" min="0.20" max="1.10" step="0.02" ng-model="cfg.survivalDeltaSize" ng-change="persist()">
             </div>
           </div>
         </div>
         <div class="sv-card">
-          <div class="sv-card-title">ANIMACIONI I NUMRIT</div>
-          <div class="sv-row" style="margin-top:0;">
-            <span class="sv-mini-lbl">Shpejtësia e lëvizjes</span><span class="sv-val">{{cfg.smoothTime}} ms</span></div>
-          <input class="sv-range" type="range" min="120" max="900" step="20" ng-model="cfg.smoothTime" ng-change="persist()">
-          <div class="sv-row">
-            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.lowPulse" ng-change="persist()"><span class="sv-sw"></span> Pulse në CRITICAL</label>
+          <div class="sv-card-title">ANIMACIONET E NUMRIT</div>
+          <div class="sv-grid2">
+            <div>
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Smooth number</span><span class="sv-val">{{cfg.survivalSmoothTime}} ms</span></div>
+              <input class="sv-range" type="range" min="120" max="900" step="20" ng-model="cfg.survivalSmoothTime" ng-change="persist()">
+            </div>
+            <div>
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Rolling duration</span><span class="sv-val">{{cfg.survivalRollDuration}} ms</span></div>
+              <input class="sv-range" type="range" min="220" max="1000" step="20" ng-model="cfg.survivalRollDuration" ng-change="persist()">
+            </div>
           </div>
+          <div class="sv-row">
+            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.survivalRollingCounter" ng-change="persist()"><span class="sv-sw"></span> Rolling Counter</label>
+            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.survivalImpactShake" ng-change="persist()"><span class="sv-sw"></span> Impact shake</label>
+            <label class="sv-toggle"><input type="checkbox" ng-model="cfg.survivalLowPulse" ng-change="persist()"><span class="sv-sw"></span> Low-chance pulse</label>
+          </div>
+          <div class="sv-note">Smooth Pop rekomandohet pa Rolling/Ghost për FPS dhe animacion ma të pastër (siç ishte në v5.1).</div>
         </div>
         <div class="sv-card">
           <div class="sv-card-title">VISIBILITY</div>
           <div class="sv-row" style="margin-top:0;">
-            <button class="sv-btn" ng-class="{active:cfg.displayMode==='always'}" ng-click="cfg.displayMode='always';st.visible=true;persist()">Gjithmonë</button>
-            <button class="sv-btn" ng-class="{active:cfg.displayMode==='change'}" ng-click="cfg.displayMode='change';st.visible=true;persist()">Kur ndryshon</button>
-            <button class="sv-btn" ng-class="{active:cfg.displayMode==='danger'}" ng-click="cfg.displayMode='danger';persist()">Vetëm në rrezik</button>
+            <button class="sv-btn" ng-class="{active:cfg.survivalDisplayMode==='always'}" ng-click="cfg.survivalDisplayMode='always';survival.visible=true;persist()">Gjithmonë</button>
+            <button class="sv-btn" ng-class="{active:cfg.survivalDisplayMode==='change'}" ng-click="cfg.survivalDisplayMode='change';survival.visible=true;persist()">Kur ndryshon</button>
+            <button class="sv-btn" ng-class="{active:cfg.survivalDisplayMode==='danger'}" ng-click="cfg.survivalDisplayMode='danger';persist()">Vetëm në rrezik</button>
           </div>
           <div class="sv-grid2" style="margin-top:10px;">
             <div>
-              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Auto-hide</span><span class="sv-val">{{cfg.autoHideMs}} ms</span></div>
-              <input class="sv-range" type="range" min="500" max="10000" step="250" ng-model="cfg.autoHideMs" ng-change="persist()">
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Auto-hide</span><span class="sv-val">{{cfg.survivalAutoHideMs}} ms</span></div>
+              <input class="sv-range" type="range" min="500" max="10000" step="250" ng-model="cfg.survivalAutoHideMs" ng-change="persist()">
             </div>
             <div>
-              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Rrezik trego ≤ </span><span class="sv-val">{{cfg.dangerShowAt}}%</span></div>
-              <input class="sv-range" type="range" min="1" max="99" step="1" ng-model="cfg.dangerShowAt" ng-change="persist()">
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Rrezik trego ≤</span><span class="sv-val">{{cfg.survivalDangerShowAt}}%</span></div>
+              <input class="sv-range" type="range" min="1" max="99" step="1" ng-model="cfg.survivalDangerShowAt" ng-change="persist()">
             </div>
           </div>
         </div>
       </div>
 
-      <!-- ===== FORMULA ===== -->
+      <!-- FORMULA -->
       <div ng-show="tab==='formula'">
         <div class="sv-card">
           <div class="sv-card-title">FORMULA</div>
           <div class="sv-row" style="margin-top:0;">
-            <button class="sv-btn" ng-class="{active:cfg.formula==='forgiving'}" ng-click="cfg.formula='forgiving';persist()">FORGIVING</button>
-            <button class="sv-btn" ng-class="{active:cfg.formula==='balanced'}" ng-click="cfg.formula='balanced';persist()">BALANCED</button>
-            <button class="sv-btn" ng-class="{active:cfg.formula==='hardcore'}" ng-click="cfg.formula='hardcore';persist()">HARDCORE</button>
-            <button class="sv-btn" ng-class="{active:cfg.formula==='damageOnly'}" ng-click="cfg.formula='damageOnly';persist()">DAMAGE ONLY</button>
+            <button class="sv-btn" ng-class="{active:cfg.survivalFormula==='forgiving'}" ng-click="cfg.survivalFormula='forgiving';persist()">FORGIVING</button>
+            <button class="sv-btn" ng-class="{active:cfg.survivalFormula==='balanced'}" ng-click="cfg.survivalFormula='balanced';persist()">BALANCED</button>
+            <button class="sv-btn" ng-class="{active:cfg.survivalFormula==='hardcore'}" ng-click="cfg.survivalFormula='hardcore';persist()">HARDCORE</button>
+            <button class="sv-btn" ng-class="{active:cfg.survivalFormula==='damageOnly'}" ng-click="cfg.survivalFormula='damageOnly';persist()">DAMAGE ONLY</button>
           </div>
-          <div class="sv-note">Forgiving = bie ngadalë · Balanced = e balancuar · Hardcore = bie shpejt · Damage only = vetëm nga dëmi strukturor, pa ndikim të shpejtësisë.</div>
+          <div class="sv-note">Forgiving = bie ngadalë · Balanced = e balancuar · Hardcore = bie shpejt · Damage only = vetëm nga dëmi strukturor.</div>
         </div>
         <div class="sv-card">
-          <div class="sv-card-title">PESHOShkALIBRIMI</div>
-          <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Ndjeshmëria</span><span class="sv-val">{{cfg.sensitivity|number:2}}×</span></div>
-          <input class="sv-range" type="range" min="0.65" max="1.35" step="0.05" ng-model="cfg.sensitivity" ng-change="persist()">
+          <div class="sv-card-title">KALIBRIMI</div>
+          <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Ndjeshmëria</span><span class="sv-val">{{cfg.survivalSensitivity|number:2}}×</span></div>
+          <input class="sv-range" type="range" min="0.65" max="1.35" step="0.05" ng-model="cfg.survivalSensitivity" ng-change="persist()">
           <div class="sv-grid2" style="margin-top:10px;">
             <div>
-              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Damage weight</span><span class="sv-val">{{cfg.damageWeight|number:2}}</span></div>
-              <input class="sv-range" type="range" min="0" max="2" step="0.05" ng-model="cfg.damageWeight" ng-change="persist()">
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Damage weight</span><span class="sv-val">{{cfg.survivalDamageWeight|number:2}}</span></div>
+              <input class="sv-range" type="range" min="0" max="2" step="0.05" ng-model="cfg.survivalDamageWeight" ng-change="persist()">
             </div>
             <div>
-              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Impact weight</span><span class="sv-val">{{cfg.impactWeight|number:2}}</span></div>
-              <input class="sv-range" type="range" min="0" max="2" step="0.05" ng-model="cfg.impactWeight" ng-change="persist()">
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Impact weight</span><span class="sv-val">{{cfg.survivalImpactWeight|number:2}}</span></div>
+              <input class="sv-range" type="range" min="0" max="2" step="0.05" ng-model="cfg.survivalImpactWeight" ng-change="persist()">
             </div>
             <div>
-              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Speed weight</span><span class="sv-val">{{cfg.speedWeight|number:2}}</span></div>
-              <input class="sv-range" type="range" min="0" max="2" step="0.05" ng-model="cfg.speedWeight" ng-change="persist()">
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Speed weight</span><span class="sv-val">{{cfg.survivalSpeedWeight|number:2}}</span></div>
+              <input class="sv-range" type="range" min="0" max="2" step="0.05" ng-model="cfg.survivalSpeedWeight" ng-change="persist()">
             </div>
             <div>
-              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Minimumi i gjallë</span><span class="sv-val">{{cfg.minAlive}}%</span></div>
-              <input class="sv-range" type="range" min="1" max="15" step="1" ng-model="cfg.minAlive" ng-change="persist()">
+              <div class="sv-row" style="margin-top:0;"><span class="sv-mini-lbl">Minimum alive</span><span class="sv-val">{{cfg.survivalMinAlive}}%</span></div>
+              <input class="sv-range" type="range" min="1" max="15" step="1" ng-model="cfg.survivalMinAlive" ng-change="persist()">
             </div>
           </div>
-          <div class="sv-note">0% mbetet gjithmonë vetëm për TOTALLED. Pesha me 0 = e fik atë faktor.</div>
+          <div class="sv-note">0% mbetet gjithmonë vetëm për TOTALLED, pavarësisht formulës.</div>
         </div>
       </div>
 
-      <!-- ===== TJERA ===== -->
+      <!-- TJERA -->
       <div ng-show="tab==='tjera'">
         <div class="sv-card">
           <div class="sv-card-title">TASTET</div>
@@ -548,7 +531,7 @@
             <div><div class="sv-mini-lbl">Reset run</div><input class="sv-input" type="text" ng-model="cfg.resetKey" ng-change="persist()" maxlength="12"></div>
             <div><div class="sv-mini-lbl">Paneli</div><input class="sv-input" type="text" ng-model="cfg.panelKey" ng-change="persist()" maxlength="12"></div>
           </div>
-          <div class="sv-note">Lidhjet e forta (punojnë gjithmonë, edhe kur fokusimi është te loja): Options → Controls → «SURVIVAL HUD: …»</div>
+          <div class="sv-note">Lidhjet e forta: Options → Controls → «SURVIVAL HUD: …» (punojnë edhe kur fokusi është te loja).</div>
         </div>
         <div class="sv-card">
           <div class="sv-card-title">PRESETS</div>
@@ -563,13 +546,13 @@
           </div>
         </div>
         <div class="sv-card">
-          <div class="sv-card-title">DEMO & TEST</div>
+          <div class="sv-card-title">DEMO &amp; TEST</div>
           <div class="sv-row" style="margin-top:0;">
             <button class="sv-btn" ng-click="testHit(0.07)">Goditje e lehtë</button>
             <button class="sv-btn" ng-click="testHit(0.22)">Goditje e rëndë</button>
             <button class="sv-btn" ng-click="testHit(0.55)">Aksident 💀</button>
           </div>
-          <div class="sv-note">Vetëm për provë pa në lojë — në BeamNG këto s'duken, dëmi vjen automatikisht.</div>
+          <div class="sv-note">Vetëm për provë — në BeamNG këto s'duken, dëmi vjen automatikisht nga makina.</div>
         </div>
       </div>
     </div>
